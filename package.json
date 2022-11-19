@@ -4,7 +4,7 @@
   "description": "An app to keep track of your pets health!",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "nodemon server/server.js",
     "dev": "npm start && webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
