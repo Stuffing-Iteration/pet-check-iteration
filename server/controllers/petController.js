@@ -147,12 +147,32 @@ petController.getPetMedications = (req, res, next) => {
 
 // ------ Get all of a pet's appointments ------ //
 petController.getPetAppointments = (req, res, next) => {
-  return next();
+  console.log('GET all appointments req body: ', req.body);
+  const { petid } = req.params;
+  const qAppmnt = 'SELECT * FROM appointments WHERE pet_id = $1';
+  const params = [petid];
+  db.query(qAppmnt, params)
+    .then(appointment => {
+      console.log('retrieved appointments: ', appointment.rows);
+      res.locals.retrievedAppt = appointment.rows; // array of appointments to be sent back to front end
+      return next();
+    })
+    .catch(err => next({ errorMsg: 'Error in petController.getPetAppointments: ', err: err}));
 }
 
 // ------ Get all of a pet's vaccinations ------ //
 petController.getPetVaccinations = (req, res, next) => {
-  return next();
+  console.log('GET all vaccinations req body: ', req.body);
+  const { petid } = req.params;
+  const qVax = 'SELECT * FROM vaccinations WHERE pet_id = $1';
+  const params = [petid];
+  db.query(qVax, params)
+    .then(vaccination => {
+      console.log('retrieved vaccinations: ', vaccination.rows);
+      res.locals.retrievedVax = vaccination.rows;
+      return next();
+    })
+    .catch(err => next({ errorMsg: 'Error in petController.getPetVaccinations: ', err: err}));
 }
 
 // ------ Get all of a user's veterinarians ------ //
