@@ -1,0 +1,27 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  align-items: center;
+
+  .pet-info {
+    border: 2px solid black;
+    width: 60%;
+    // height: 150px;
+    display: flex;
+    flex-direction: column;
+
+    &-header {
+      font-size: 30px;
+      padding: 30px;
+    }
+
+    &-box {
+      display: flex;
+      padding: 30px;
+      .pet-info-pic {
+        width: 30%;
+      }
+    }
+  }
+}
