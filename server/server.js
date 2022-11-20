@@ -19,6 +19,11 @@ app.get('/', (req, res) => {
   res.status(200).send('Hello from the back end!')
 });
 
+
+//////////////////////////////////////////////////////////////////////////////////////
+// ------------------------------ User Routes ------------------------------------ //
+//////////////////////////////////////////////////////////////////////////////////////
+
 // Adding new users to the DB
 app.post('/users', userController.createUser, (req, res) => {
   res.status(200).send('user added');
@@ -26,9 +31,78 @@ app.post('/users', userController.createUser, (req, res) => {
 
 // Signing in existing users
 app.post('/login', userController.verifyUser, (req, res) => {
-  res.status(200).send('Logged in');
+  const response = {
+    user: res.locals.user,
+    found: res.locals.found
+  }
+  res.status(200).json(response);
 })
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------- Adding Pet Info Routes --------------------------------- //
+/////////////////////////////////////////////////////////////////////////////////////////
+
+// Add a new pet
+app.post('/pets', petController.addPet, (req, res) => {
+  res.status(200).send('New pet added!')
+})
+
+// Add a new veterinarian
+app.post('/vets', petController.addVet, (req, res) => {
+  res.status(200).send('New veterinarian added!')
+})
+
+// Add a new medication
+app.post('/meds', petController.addMedication, (req, res) => {
+  res.status(200).send('New medication added!')
+})
+
+// Add a new appointment
+app.post('/appts', petController.addAppointment, (req, res) => {
+  res.status(200).send('New appointment added!')
+})
+
+// Add a new vaccination
+app.post('/vax', petController.addVaccination, (req, res) => {
+  res.status(200).send('New vaccination added!')
+})
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// ------------------------- Retrieving Pet Info Routes ------------------------------ //
+/////////////////////////////////////////////////////////////////////////////////////////
+
+// ---- Get all of a users pets --- //
+app.get('/pets/:userid', petController.getUserPets, (req, res) => {
+  res.status(200).json(res.locals.retrievedPets);
+})
+
+// ----- Get all of a users veterinarians -----//
+app.get('/vets/:userid', petController.getUserVets, (req, res) => {
+  res.status(200).json(res.locals.retrievedVets);
+})
+
+
+// --- Get all of a pet's medications ---- //
+app.get('/meds/:petid', petController.getPetMedications, (req, res) => {
+  res.status(200).json(res.locals.retrievedMeds);
+})
+
+// ------ Get all of a pet's vaccinations ------ //
+app.get('/vax/:petid', petController.getPetVaccinations, (req, res) => {
+  res.status(200).json(res.locals.retrievedVax);
+})
+
+// ------ Get all of a pet's appointments ---- //
+app.get('/appts/:petid', petController.getPetAppointments, (req, res) => {
+  res.status(200).json(res.locals.retrievedAppts);
+})
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------- Global Routes/Handlers -------------------------------- //
+/////////////////////////////////////////////////////////////////////////////////////////
 
 // ERROR HANDLERS:
 // local
