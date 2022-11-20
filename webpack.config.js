@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { dirname } = require('path');
 
 
 module.exports = {
@@ -12,7 +13,10 @@ module.exports = {
     devServer: {
         port: '8080',
         host: 'localhost',
-        static: ['./public'],
+        static: {
+            directory: path.resolve(__dirname, 'client'),
+            publicPath: '/'
+        },
         liveReload: true,
         proxy: {
             context: ['/api'],
@@ -32,7 +36,9 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
-                    options: ['@babel/preset-env', '@babel/preset-react']
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react']
+                    }
                 }
             },
             {
@@ -43,6 +49,6 @@ module.exports = {
     },
     plugins: [new HtmlWebpackPlugin({
         title: 'Webpack App',
-        template: './client/index.html'
+        template: './index.html'
     })],
 }
