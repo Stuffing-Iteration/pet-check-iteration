@@ -113,6 +113,17 @@ petController.addAppointment = (req, res, next) => {
 petController.getUserPets = (req, res, next) => {
   console.log('GET user pets req body: ', req.body);
   console.log('req params for user pets: ', req.params);
+  // query the database for all the pets with a user_id that matches the id in req.params
+  const { userid } = req.params;
+  const qText = 'SELECT * FROM pets WHERE owner_id = $1';
+  const params = [userid]
+  db.query(qText, params)
+    .then(pets => {
+      console.log('retrieved pets: ', pets.rows);
+      res.locals.retrievedPets = pets.rows;
+      return next()
+    })
+    .catch(err => next({errorMsg: 'Error in getUserPets middleware', err: err}));
 
 }
 
