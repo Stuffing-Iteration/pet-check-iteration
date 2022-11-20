@@ -4,7 +4,7 @@ const petController = {};
 
 let petId = 1;
 let medId = 1;
-let vetId = 2;
+let vetId = 3;
 let vaxId = 1;
 let apptId = 1;
 
@@ -34,9 +34,9 @@ petController.addPet = (req, res, next) => {
 // ------------------------ Add a new Vet ------------------------ //
 petController.addVet = (req, res, next) => {
   console.log('add vet req body: ', req.body);
-  const { vet, location, phone, clinic } = req.body;
-  const qText = 'INSERT INTO vets (id, vet, location, phone, clinic) VALUES ($1, $2, $3, $4, $5);';
-  const params = [vetId, vet, location, phone, clinic ];
+  const { vet, location, phone, clinic, user_id } = req.body;
+  const qText = 'INSERT INTO vets (id, vet, location, phone, clinic, user_id) VALUES ($1, $2, $3, $4, $5, $6);';
+  const params = [vetId, vet, location, phone, clinic, user_id ];
   db.query(qText, params)
     .then(result => {
       console.log('returned from db query: ', result)
@@ -106,41 +106,73 @@ petController.addAppointment = (req, res, next) => {
 // ----------------------------------------------------------------- //
 
 
+
 /////////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Retrieving Pet Info Routes ------------------------------ //
 /////////////////////////////////////////////////////////////////////////////////////////
 
+// ---- Get all of a users pets --- //
 petController.getUserPets = (req, res, next) => {
   console.log('GET user pets req body: ', req.body);
   console.log('req params for user pets: ', req.params);
   // query the database for all the pets with a user_id that matches the id in req.params
   const { userid } = req.params;
-  const qText = 'SELECT * FROM pets WHERE owner_id = $1';
+  const qText = 'SELECT * FROM pets WHERE owner_id = $1'; // get all the pets with a owner_id that matches
   const params = [userid]
   db.query(qText, params)
     .then(pets => {
       console.log('retrieved pets: ', pets.rows);
-      res.locals.retrievedPets = pets.rows;
+      res.locals.retrievedPets = pets.rows; // add the array of pets to res.locals to send back to front end
       return next()
     })
     .catch(err => next({errorMsg: 'Error in getUserPets middleware', err: err}));
-
 }
 
-petController.getPetMeds = (req, res, next) => {
-  console.log('GET user meds req body: ', req.body);
+// --- Get all of a pet's medications ---- //
+petController.getPetMedications = (req, res, next) => {
+  console.log('GET pet meds req body: ', req.body);
   console.log('req params for pet meds: ', req.params);
+
+  const { petid } = req.params;
+  const qText = 'SELECT * FROM medications WHERE pet_id = $1'; // get all the meds with a pet_id that matches
+  const params = [petid]
+  db.query(qText, params)
+    .then(meds => {
+      console.log('retrieved meds: ', meds.rows);
+      res.locals.retrievedMeds = meds.rows; // add the array of pets to res.locals to send back to front end
+      return next()
+    })
+    .catch(err => next({errorMsg: 'Error in getPetMedications middleware', err: err}));
 }
 
+// ------ Get all of a pet's appointments ------ //
 petController.getPetAppointments = (req, res, next) => {
-  console.log('GET user meds req body: ', req.body);
-  console.log('req params for pet meds: ', req.params);
+  return next();
 }
 
+// ------ Get all of a pet's vaccinations ------ //
 petController.getPetVaccinations = (req, res, next) => {
-  console.log('GET user meds req body: ', req.body);
-  console.log('req params for pet meds: ', req.params);
+  return next();
 }
+
+// ------ Get all of a user's veterinarians ------ //
+petController.getUserVets = (req, res, next) => {
+  const { userid } = req.params;
+  console.log('vet params', req.params);
+  const qText = 'SELECT * FROM vets WHERE user_id = $1'; // get all the vets with a user_id that matches
+  const params = [userid]
+  db.query(qText, params)
+    .then(vets => {
+      console.log('retrieved vets: ', vets.rows);
+      res.locals.retrievedVets = vets.rows; // add the vets to res.locals to send back to frontend
+      return next()
+    })
+    .catch(err => next({errorMsg: 'Error in getUserVets middleware', err: err}));
+}
+
+
+
+
 /*
 // ------ request body templates for testing ------- //
 ////// --- Pets ---- ////////////
@@ -159,8 +191,9 @@ petController.getPetVaccinations = (req, res, next) => {
  {
   "vet": "Dr. Kim",
   "location": "123 Main Street, Los Angeles, CA 90048",
-  "phone": 555-555-5555,
-  "clinic": "Super Duper Animal Hospital"
+  "phone": "555-555-5555",
+  "clinic": "Super Duper Animal Hospital",
+  "user_id": 1
  }
 
 // ---- Vaccinations --- //

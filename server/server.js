@@ -73,8 +73,30 @@ app.post('/vax', petController.addVaccination, (req, res) => {
 // ------------------------- Retrieving Pet Info Routes ------------------------------ //
 /////////////////////////////////////////////////////////////////////////////////////////
 
+// ---- Get all of a users pets --- //
 app.get('/pets/:userid', petController.getUserPets, (req, res) => {
   res.status(200).json(res.locals.retrievedPets);
+})
+
+// ----- Get all of a users veterinarians -----//
+app.get('/vets/:userid', petController.getUserVets, (req, res) => {
+  res.status(200).json(res.locals.retrievedVets);
+})
+
+
+// --- Get all of a pet's medications ---- //
+app.get('/meds/:petid', petController.getPetMedications, (req, res) => {
+  res.status(200).json(res.locals.retrievedMeds);
+})
+
+// ------ Get all of a pet's vaccinations ------ //
+app.get('/vax/:petid', petController.getPetVaccinations, (req, res) => {
+  res.status(200).json(res.locals.retrievedVax);
+})
+
+// ------ Get all of a pet's appointments ---- //
+app.get('/appts/:petid', petController.getPetAppointments, (req, res) => {
+  res.status(200).json(res.locals.retrievedAppts);
 })
 
 
