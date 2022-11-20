@@ -18,22 +18,22 @@ function App () {
     const [error, setError] = useState("");
 
     const Login = details => {
-        console.log(details)
+        
 
         if(details.email == adminUser.email && details.password == adminUser.password){
-            console.log('logged in')
+            
             setUser({
                 name:details.name,
                 email: details.email
             })
         } else {
             setError('details dont matcadm')
-            console.log('detain@admin.comls dont match')
+            
     }
     }
 
     const LogOut = () => {
-        console.log('logout');
+        
         setUser({name: "" , email: ""})
        }
 
