@@ -13,10 +13,11 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
-
+app.use(express.static(path.resolve(__dirname, '/client')));
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello from the back end!')
+  res.status(200).send('Hello from the back-end')
+  
 });
 
 
