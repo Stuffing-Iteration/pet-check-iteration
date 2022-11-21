@@ -41,13 +41,28 @@ userController.verifyUser = (req, res, next) => {
     db.query(verifyQ, params)
       .then((user) => {
         console.log('db result', user);
-        if (bcrypt.compareSync(password, user.rows[0].password));
-        res.locals.username = user.rows[0].username;
-        return next();
+        if (user.rows.length) {
+          if (bcrypt.compareSync(password, user.rows[0].password)) {
+            res.locals.user = user.rows[0]; // send back the whole user object on the response, in case the frontend needs the id/email
+            res.locals.found = true;
+            return next();
+          } else {
+            res.locals.found = false;
+            return next({msg: 'No user found with that username'})
+          }
+        } else {
+          return next({errorMsg: 'No user found with that username!'})
+        }
       })
       .catch((err => {return next({msg: 'ERROR IN userController.verifyUser', err: err})}));
 }
 
-
+// ------ request body template for testing ------- //
+// {
+//   "username": "testuser1",
+//   "password": "password",
+//   "email": "email@email.com"
+// }
+// ----------------------------------------------- //
 
 module.exports = userController;
