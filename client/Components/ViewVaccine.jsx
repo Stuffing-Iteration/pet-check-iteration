@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -38,28 +42,32 @@ export default function ViewVaccine() {
     setOpen(false);
   };
   return (
-    <>
-      <Button
-        className='viewVaccine'
-        variant='outlined'
-        onClick={handleClickOpen}
-      >
+    <div>
+      <Button className='addNote' variant='outlined' onClick={handleClickOpen}>
         View
       </Button>
-      <div
-        style={{ height: 400, width: '100%' }}
-        // open={open}
-        onClose={handleClose}
-      >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-        />
-        {/* <Button onClick={handleClose}>Cancel</Button> */}
-      </div>
-    </>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>View Vaccine Record</DialogTitle>
+        <DialogContent>
+          <div
+            style={{ height: 400, width: '500px' }}
+            // open={open}
+            onClose={handleClose}
+          >
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              checkboxSelection
+            />
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          {/* <Button onClick={handleClick}>Submit</Button> */}
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }
