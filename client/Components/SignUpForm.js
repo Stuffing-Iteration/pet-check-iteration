@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-function SignUpForm({SignUp, error}) {
+function SignUpForm({login, error}) {
     const [details, setDetails] =useState({name: "", email: "", password:""});
 
     const submitHandler = e => {
@@ -9,10 +9,15 @@ function SignUpForm({SignUp, error}) {
         SignUp(details);
     }
 
+    // ## form should work, same as log in
+    // => need to post information to database
+    // => need to link to log in, if user has no log in yet
+
+
   return (
     <form onSubmit= {submitHandler}>
         <div className="form-inner">
-            <h2>Login</h2>
+            <h2>Sign Up</h2>
             {(error != "") ? (<div className="error"></div>) : ""}
             <div className="form-group">
                 <label htmlFor="name">Name:</label>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import LoginForm from './Components/LoginForm'
+import SignUpForm from './Components/SignUpForm'
 import './index.css'
 
 
@@ -27,7 +28,7 @@ function App () {
                 email: details.email
             })
         } else {
-            setError('details dont matcadm')
+            setError('details dont match')
             
     }
     }
@@ -43,6 +44,7 @@ function App () {
                     <div className= "Welcome">
                         <h2>Welcome, <span>{user.name}</span></h2>
                         <button onClick={LogOut}>Logout</button>
+                        <button> Take me to my pets! </button>
                         </div>
                 ) : (
                     <LoginForm Login={Login} error={error} />

@@ -128,5 +128,32 @@ form:after {
     font-weight: 700;
   }
 
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    height: 100vh;
+    background-color: black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popup-inner {
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    max-width: 640px;
+    background-color: white;
+  }
+
+  .popup-inner .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+
 
 
