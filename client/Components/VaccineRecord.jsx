@@ -2,13 +2,14 @@ import React from 'react';
 import AddVaccine from './AddVaccine';
 import ViewVaccine from './ViewVaccine';
 
-const VaccineRecord = ({ vaccine }) => {
+const VaccineRecord = ({ vaccineInfo }) => {
+  console.log('vax info from vacine record componenent', vaccineInfo);
   return (
     <>
       <div className='vaccine-info'>
         <div className='vaccine-info-header'>Vaccine Record</div>
         <div className='vaccine-info-box'>
-          <ViewVaccine />
+          <ViewVaccine vaccineInfo={vaccineInfo} />
           <AddVaccine />
         </div>
       </div>

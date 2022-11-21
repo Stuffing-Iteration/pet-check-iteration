@@ -19,21 +19,33 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, medication: 'Flea pill', dosage: '', instruction: '', reason: '' },
-  { id: 2, medication: '', dosage: '', instruction: '', reason: '' },
-  { id: 3, medication: '', dosage: '', instruction: '', reason: '' },
-  {
-    id: 4,
-    medication: '',
-    dosage: '',
-    instruction: '',
-    reason: '',
-  },
-  { id: 5, medication: '', dosage: '', instruction: '', reason: '' },
-];
+// const rows = [
+//   { id: 1, medication: 'Flea pill', dosage: '', instruction: '', reason: '' },
+//   { id: 2, medication: '', dosage: '', instruction: '', reason: '' },
+//   { id: 3, medication: '', dosage: '', instruction: '', reason: '' },
+//   {
+//     id: 4,
+//     medication: '',
+//     dosage: '',
+//     instruction: '',
+//     reason: '',
+//   },
+//   { id: 5, medication: '', dosage: '', instruction: '', reason: '' },
+// ];
 
-export default function ViewMedications() {
+export default function ViewMedications(props) {
+  const { medication, dosage, instructions, reason } = props.medication;
+  console.log('medication info: ', props.medication);
+  const rows = [
+    {
+      id: 1,
+      medication: medication,
+      dosage: dosage,
+      instructions: instructions,
+      reason: reason,
+    },
+  ];
+
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);

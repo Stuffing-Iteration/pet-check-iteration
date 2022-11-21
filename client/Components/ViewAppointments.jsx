@@ -19,23 +19,36 @@ const columns = [
   { field: 'Reason', headerName: 'Reason', width: 130 },
 ];
 
-const rows = [
-  { id: 1, date: '', time: '', location: '', vet: '', reason: '' },
-  { id: 2, date: '', time: '', location: '', vet: '', reason: '' },
-  { id: 3, date: '', time: '', location: '', vet: '', reason: '' },
-  {
-    id: 4,
-    date: '',
-    time: '',
-    location: '',
-    vet: '',
-    reason: '',
-  },
-  { id: 5, date: '', time: '', location: '', vet: '', reason: '' },
-  { id: 6, date: '', time: '', location: '', vet: '', reason: '' },
-];
+// const rows = [
+//   { id: 1, date: '', time: '', location: '', vet: '', reason: '' },
+//   { id: 2, date: '', time: '', location: '', vet: '', reason: '' },
+//   { id: 3, date: '', time: '', location: '', vet: '', reason: '' },
+//   {
+//     id: 4,
+//     date: '',
+//     time: '',
+//     location: '',
+//     vet: '',
+//     reason: '',
+//   },
+//   { id: 5, date: '', time: '', location: '', vet: '', reason: '' },
+//   { id: 6, date: '', time: '', location: '', vet: '', reason: '' },
+// ];
 
-export default function ViewAppointments() {
+export default function ViewAppointments({ appts }) {
+  const { date, time, location, vet, reason } = appts;
+
+  const rows = [
+    {
+      id: 1,
+      date: date,
+      time: time,
+      location: location,
+      vet: vet,
+      reason: reason,
+    },
+  ];
+
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);

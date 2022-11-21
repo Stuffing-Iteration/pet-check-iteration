@@ -8,7 +8,7 @@ const Medication = ({ med }) => {
       <div className='med-info'>
         <div className='med-info-header'>Medication & Treatment</div>
         <div className='med-info-box'>
-          <ViewMedications />
+          <ViewMedications medication={med} />
           <AddMedication />
         </div>
       </div>
