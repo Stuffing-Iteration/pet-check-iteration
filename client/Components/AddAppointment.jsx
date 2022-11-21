@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import axios from 'axios';
 
 // const appt = {
 //   date: '1/22/23',
@@ -24,18 +25,31 @@ const AddAppointment = () => {
   const [reason, setReason] = useState('');
   const [open, setOpen] = React.useState(false);
 
-  const handleClick = async () => {
-    // const data = {
-    //   vaccine,
-    //   price,
-    //   siteNumber,
-    //   description,
-    //   location: { lat: parseInt(latitude), lng: parseInt(longitude) },
-    // };
-    // const card = await axios.post('http://localhost:8080/cards/add', data);
-    // const newCards = [...cards, card.data];
-    // setCards(newCards);
-    // setOpen(false);
+  const handleClick = () => {
+    fetch('http://localhost:3000/appts', {
+      method: 'POST',
+      body: {
+        date: date,
+        time: time,
+        location: location,
+        vet: vet,
+        reason: reason,
+      },
+    }).then((response) => console.log(response));
+    // useEffect(() => {
+    //   axios
+    //     .post('http://localhost:3000/appts', {
+    //       date: date,
+    //       time: time,
+    //       location: location,
+    //       vet: vet,
+    //       reason: reason,
+    //     })
+    //     .then((res) => {
+    //       console.log('posted: ', res);
+    //     })
+    //     .catch((err) => console.log(err));
+    // });
   };
 
   const handleClickOpen = () => {
@@ -103,7 +117,7 @@ const AddAppointment = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type='submit'>Submit</Button>
+          <Button onClick={handleClick}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -17,6 +17,7 @@ import FormControl from '@mui/material/FormControl';
 // };
 
 const AddMedication = () => {
+  const [medication, setMedication] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
@@ -25,17 +26,15 @@ const AddMedication = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = async () => {
-    // const data = {
-    //   vaccine,
-    //   price,
-    //   siteNumber,
-    //   description,
-    //   location: { lat: parseInt(latitude), lng: parseInt(longitude) },
-    // };
-    // const card = await axios.post('http://localhost:8080/cards/add', data);
-    // const newCards = [...cards, card.data];
-    // setCards(newCards);
-    // setOpen(false);
+    fetch('http://localhost:3000/meds', {
+      method: 'POST',
+      body: {
+        medication: medication,
+        dosage: dosage,
+        instructions: instructions,
+        reason: reason,
+      },
+    });
   };
 
   const handleClickOpen = () => {
@@ -103,7 +102,7 @@ const AddMedication = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type='submit'>Submit</Button>
+          <Button onClick={handleClick}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

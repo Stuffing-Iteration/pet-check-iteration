@@ -100,7 +100,7 @@ const PetProfile = () => {
       .catch((err) => console.log(err));
   };
   const getAppt = () => {
-    fetch('https://localhost:3000/appts/1')
+    fetch('http://localhost:3000/appts/1')
       .then((response) => {
         return response.json();
       })

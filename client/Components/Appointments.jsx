@@ -8,7 +8,7 @@ const Appointments = ({ appt }) => {
       <div className='appt-info'>
         <div className='appt-info-header'>Appointments</div>
         <div className='appt-info-box'>
-          <ViewAppointments />
+          <ViewAppointments appts={appt} />
           <AddAppointment />
         </div>
       </div>

@@ -23,6 +23,28 @@ const AddVaccine = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = async () => {
+    await fetch('http://localhost:3000/vax', {
+      method: 'POST',
+      body: {
+        vaccine: vaccine,
+        date: date,
+        expiration: expiration,
+        location: location,
+        pet_id: 1,
+        vet_id: 1,
+      },
+    });
+
+    /*
+    {
+  "vaccine": "rabies",
+  "date": "10/12/22",
+  "expiration": "10/12/25",
+  "location": ?
+  "pet_id": 1,
+  "vet_id": 1
+}
+    */
     // const { vaccine, date, expiration, location, pet_id, vet_id } = req.body;
     // const data = {
     //   vaccine,
