@@ -147,12 +147,32 @@ petController.getPetMedications = (req, res, next) => {
 
 // ------ Get all of a pet's appointments ------ //
 petController.getPetAppointments = (req, res, next) => {
-  return next();
+  console.log('GET all appointments req body: ', req.body);
+  const { petid } = req.params;
+  const qAppmnt = 'SELECT * FROM appointments WHERE pet_id = $1';
+  const params = [petid];
+  db.query(qAppmnt, params)
+    .then(appointment => {
+      console.log('retrieved appointments: ', appointment.rows);
+      res.locals.retrievedAppt = appointment.rows; // array of appointments to be sent back to front end
+      return next();
+    })
+    .catch(err => next({ errorMsg: 'Error in petController.getPetAppointments: ', err: err}));
 }
 
 // ------ Get all of a pet's vaccinations ------ //
 petController.getPetVaccinations = (req, res, next) => {
-  return next();
+  console.log('GET all vaccinations req body: ', req.body);
+  const { petid } = req.params;
+  const qVax = 'SELECT * FROM vaccinations WHERE pet_id = $1';
+  const params = [petid];
+  db.query(qVax, params)
+    .then(vaccination => {
+      console.log('retrieved vaccinations: ', vaccination.rows);
+      res.locals.retrievedVax = vaccination.rows;
+      return next();
+    })
+    .catch(err => next({ errorMsg: 'Error in petController.getPetVaccinations: ', err: err}));
 }
 
 // ------ Get all of a user's veterinarians ------ //
@@ -170,6 +190,38 @@ petController.getUserVets = (req, res, next) => {
     .catch(err => next({errorMsg: 'Error in getUserVets middleware', err: err}));
 }
 
+// ------ Deleting an appointment ------ // 
+petController.deleteAppointment = (req, res, next) => {
+  console.log('inside petController.deleteAppointment');
+  const { apptId } = req.body;
+  const params = [apptId];
+  const deleteQ = 'DELETE FROM appointments WHERE id = $1';
+  db.query(deleteQ, params)
+    .then(() => {return next()})
+    .catch(err => next({errorMsg: 'Error in petController.deleteAppointment: ', err: err}));
+};
+
+// ------ Deleting a vaccination ------ // 
+petController.deleteVax = (req, res, next) => {
+  console.log('inside petController.deleteVax');
+  const { vaxId } = req.body;
+  const params = [vaxId];
+  const deleteQ = 'DELETE FROM vaccinations WHERE id = $1';
+  db.query(deleteQ, params)
+    .then(() => {return next()})
+    .catch(err => next({errorMsg: 'Error in petController.deleteVaccinations: ', err: err}));
+};
+
+// ------ Deleting a medication ------ // 
+petController.deleteMedication = (req, res, next) => {
+  console.log('inside petController.deleteMedication');
+  const { medId } = req.body;
+  const params = [medId];
+  const deleteQ = 'DELETE FROM medications WHERE id = $1';
+  db.query(deleteQ, params)
+    .then(() => {return next()})
+    .catch(err => next({errorMsg: 'Error in petController.deleteMedication: ', err: err}));
+};
 
 
 
