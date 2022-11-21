@@ -6,33 +6,34 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
+// medication, dosage, instructions, pet_id, vet_id, reason
 const columns = [
-  { field: 'id', headerName: 'ID', width: 50 },
-  { field: 'vaccine', headerName: 'Vaccine', width: 130 },
-  { field: 'date', headerName: 'Date', width: 60 },
-  { field: 'expiration', headerName: 'Expiration', width: 130 },
+  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'medication', headerName: 'Medication', width: 70 },
+  { field: 'dosage', headerName: 'Dosage', width: 130 },
+  { field: 'instruction', headerName: 'Instruction', width: 130 },
   {
-    field: 'vet',
-    headerName: 'Vet',
+    field: 'reason',
+    headerName: 'Reason',
     width: 90,
   },
 ];
 
 const rows = [
-  { id: 1, vaccine: 'Bordetella', date: '', expiration: '', vet: '' },
-  { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
-  { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
+  { id: 1, medication: 'Flea pill', dosage: '', instruction: '', reason: '' },
+  { id: 2, medication: '', dosage: '', instruction: '', reason: '' },
+  { id: 3, medication: '', dosage: '', instruction: '', reason: '' },
   {
     id: 4,
-    vaccine: 'Leptospirosis',
-    date: '',
-    expiration: '',
-    vet: '',
+    medication: '',
+    dosage: '',
+    instruction: '',
+    reason: '',
   },
-  { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
+  { id: 5, medication: '', dosage: '', instruction: '', reason: '' },
 ];
 
-export default function ViewVaccine() {
+export default function ViewMedications() {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,11 +48,11 @@ export default function ViewVaccine() {
         View
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>View Vaccine Record</DialogTitle>
+        <DialogTitle>View Medication</DialogTitle>
         <DialogContent>
           <div
             style={{ height: 400, width: '500px' }}
-            // open={open}
+            open={open}
             onClose={handleClose}
           >
             <DataGrid

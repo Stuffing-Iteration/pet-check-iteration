@@ -1,5 +1,6 @@
 import React from 'react';
 import AddAppointment from './addAppointment';
+import ViewAppointments from './ViewAppointments';
 
 const Appointments = ({ appt }) => {
   return (
@@ -7,7 +8,7 @@ const Appointments = ({ appt }) => {
       <div className='appt-info'>
         <div className='appt-info-header'>Appointments</div>
         <div className='appt-info-box'>
-          <button>View Appointments</button>
+          <ViewAppointments />
           <AddAppointment />
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import AddMedication from './AddMedication';
+import ViewMedications from './ViewMedications';
 
 const Medication = ({ med }) => {
   return (
@@ -7,7 +8,7 @@ const Medication = ({ med }) => {
       <div className='med-info'>
         <div className='med-info-header'>Medication & Treatment</div>
         <div className='med-info-box'>
-          <button>View Medication</button>
+          <ViewMedications />
           <AddMedication />
         </div>
       </div>

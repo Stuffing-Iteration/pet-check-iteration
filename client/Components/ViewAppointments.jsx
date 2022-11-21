@@ -7,32 +7,35 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 50 },
-  { field: 'vaccine', headerName: 'Vaccine', width: 130 },
-  { field: 'date', headerName: 'Date', width: 60 },
-  { field: 'expiration', headerName: 'Expiration', width: 130 },
+  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'date', headerName: 'Date', width: 70 },
+  { field: 'time', headerName: 'Time', width: 130 },
+  { field: 'location', headerName: 'Location', width: 130 },
   {
     field: 'vet',
     headerName: 'Vet',
     width: 90,
   },
+  { field: 'Reason', headerName: 'Reason', width: 130 },
 ];
 
 const rows = [
-  { id: 1, vaccine: 'Bordetella', date: '', expiration: '', vet: '' },
-  { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
-  { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
+  { id: 1, date: '', time: '', location: '', vet: '', reason: '' },
+  { id: 2, date: '', time: '', location: '', vet: '', reason: '' },
+  { id: 3, date: '', time: '', location: '', vet: '', reason: '' },
   {
     id: 4,
-    vaccine: 'Leptospirosis',
     date: '',
-    expiration: '',
+    time: '',
+    location: '',
     vet: '',
+    reason: '',
   },
-  { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
+  { id: 5, date: '', time: '', location: '', vet: '', reason: '' },
+  { id: 6, date: '', time: '', location: '', vet: '', reason: '' },
 ];
 
-export default function ViewVaccine() {
+export default function ViewAppointments() {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,11 +50,11 @@ export default function ViewVaccine() {
         View
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>View Vaccine Record</DialogTitle>
+        <DialogTitle>View Appointments</DialogTitle>
         <DialogContent>
           <div
             style={{ height: 400, width: '500px' }}
-            // open={open}
+            open={open}
             onClose={handleClose}
           >
             <DataGrid

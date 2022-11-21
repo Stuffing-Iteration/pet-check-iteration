@@ -32,12 +32,16 @@
       display: flex;
       padding: 30px;
       justify-content: space-between;
+      gap: 12px;
       .pet-info-pic {
         width: 35%;
       }
       .pet-info-details {
+        border: 1px solid black;
         width: 40%;
+        padding: 20px;
         font-size: 22px;
+        margin: 5px;
       }
     }
   }
