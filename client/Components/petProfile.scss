@@ -1,0 +1,79 @@
+* {
+  font-family: sans-serif;
+}
+.MuiToolbar-root {
+  background-color: rgb(88, 119, 123);
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  padding-top: 120px;
+  align-items: center;
+  gap: 15px;
+
+  .pet-info {
+    border: 2px solid black;
+    width: 60%;
+    // height: 150px;
+    display: flex;
+    flex-direction: column;
+
+    &-header {
+      font-size: 30px;
+      padding: 30px;
+    }
+
+    &-box {
+      display: flex;
+      padding: 30px;
+      justify-content: space-between;
+      gap: 12px;
+      .pet-info-pic {
+        width: 35%;
+      }
+      .pet-info-details {
+        border: 1px solid black;
+        width: 40%;
+        padding: 20px;
+        font-size: 22px;
+        margin: 5px;
+      }
+    }
+  }
+
+  .vaccine-info,
+  .appt-info,
+  .med-info,
+  .weight-info {
+    border: 2px solid black;
+    width: 60%;
+    // height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &-header,
+    .appt-info-header,
+    .med-info-header,
+    .weight-info-header {
+      font-size: 30px;
+      padding: 30px;
+    }
+    &-box,
+    .appt-info-box,
+    .med-info-box,
+    .weight-info-box {
+      padding: 20px;
+      display: flex;
+      gap: 10px;
+      button {
+        width: 150px;
+        height: 50px;
+      }
+    }
+  }
+}
