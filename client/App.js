@@ -33,7 +33,7 @@ function App() {
 
   return (
     <>
-      {true ? (
+      {user.email != '' ? (
         <>
           {/* <h2>
             Welcome, <span>{user.name}</span>

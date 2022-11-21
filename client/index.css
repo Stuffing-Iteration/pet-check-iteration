@@ -1,132 +1,128 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: montserrat, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: montserrat, sans-serif;
 }
-
+/* 
 input, button {
     appearance: none;
     background: none;
     border: none;
     outline: none;
 
-}
+} */
 
 .App {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: gray;
-
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
 }
 
-form {
-    display: block;
-    position: relative;
-
-
+.login-form {
+  display: block;
+  position: relative;
 }
 
-form:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    z-index: 1;
-    background-image: linear-gradient(to bottom right, #ffce00, #FE4880);
-  }
+.login-form:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: 1;
+  background-image: linear-gradient(to bottom right, #ffce00, #fe4880);
+}
 
-  form .form-inner {
-    position: relative;
-    display: block;
-    background-color: white;
-    padding: 30px;
-    z-index: 2;
-  }
+.login-form .form-inner {
+  position: relative;
+  display: block;
+  background-color: white;
+  padding: 30px;
+  z-index: 2;
+}
 
-  form .form-inner h2 {
-    color: lightgray;
-    font-size: 28px;
-    font-weight:500;
-    margin-bottom: 30px;
-  }
+.login-form .form-inner h2 {
+  color: lightgray;
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
 
-  form .form-inner .form-group {
-    display: block;
-    width: 300px;
-    margin-bottom: 15px;
-  }
+.login-form .form-inner .form-group {
+  display: block;
+  width: 300px;
+  margin-bottom: 15px;
+}
 
-  .form-inner .form-group label {
-    display: block;
-    color: #666;
-    font-size: 12px;
-    margin-bottom: 5px;
-    transition: 0.4s;
+.form-inner .form-group label {
+  display: block;
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 5px;
+  transition: 0.4s;
+}
 
-  }
+.form-inner .form-group focus-within label {
+  color: #fe4880;
+}
 
-  .form-inner .form-group focus-within label {
-    color: #FE4880;
+.login-form .form-inner .form-group input {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #f8f8f8;
 
-  }
+  border-radius: 8px;
+  transition: 0.4s;
+}
 
-  form .form-inner .form-group input {
-    display: block;
-    width: 100%;
-    padding: 10px 15px;
-    background-color: #F8F8F8;
-    
-    border-radius: 8px;
-    transition: 0.4s;
-  }
+.login-form .form-inner .form-group input:focus {
+  box-shadow: 0px 0px 3px black;
+}
+.login-form .form-inner input[type='submit'],
+.welcome button {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    to right,
+    #ffce00 50%,
+    #ffce00 50%,
+    #fe4880
+  );
+  background-size: 200%;
+  background-position: 0%;
+  transition: 0.4s;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
 
-  form .form-inner .form-group input:focus {
-    box-shadow: 0px 0px 3px black;
+.login-form .form-inner input[type='submit']:hover,
+.welcome button:hover {
+  background-position: 100% 0%;
+}
 
-  }
-  form .form-inner input[type="submit"], 
-  .welcome button {
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 8px;
-    background-image: linear-gradient(to right, #FFCE00 50%,#FFCE00 50%, #FE4880);
-    background-size: 200%;
-    background-position: 0%;
-    transition: 0.4s;
-    color: #fff;
-    font-weight: 700;
-    cursor: pointer;
-  }
+.welcome {
+  width: 100%;
+  max-width: 480px;
+  background-color: white;
+  padding: 15px 30px;
+}
 
-  form .form-inner input[type="submit"]:hover, 
-  .welcome button:hover {
-    background-position: 100% 0%;
-  }
+.welcome h2 {
+  color: #888;
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
 
-  .welcome {
-    width: 100%;
-    max-width: 480px;
-    background-color: white;
-    padding: 15px 30px;
-  }
-
-  .welcome h2 {
-    color: #888;
-    font-size: 28px;
-    font-weight: 500;
-    margin-bottom: 30px;
-  }
-
-  .welcome h2 span {
-    color: #FE4888;
-    font-weight: 700;
-  }
-
-
-
+.welcome h2 span {
+  color: #fe4888;
+  font-weight: 700;
+}
