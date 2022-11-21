@@ -18,21 +18,43 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, vaccine: 'Bordetella', date: '', expiration: '', vet: '' },
-  { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
-  { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
-  {
-    id: 4,
-    vaccine: 'Leptospirosis',
-    date: '',
-    expiration: '',
-    vet: '',
-  },
-  { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
-];
+// const rows = [
+//   { id: 1, vaccine: 'Bordetella', date: '', expiration: '', vet: '' },
+//   // { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
+//   // { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
+//   // {
+//   //   id: 4,
+//   //   vaccine: 'Leptospirosis',
+//   //   date: '',
+//   //   expiration: '',
+//   //   vet: '',
+//   // },
+//   // { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
+// ];
 
-export default function ViewVaccine() {
+export default function ViewVaccine(props) {
+  const { vaccine, date, expiration, location, vet_id } = props.vaccineInfo;
+  console.log('vaccine info from viewVaccine', props.vaccineInfo);
+  const rows = [
+    {
+      id: 1,
+      vaccine: vaccine,
+      date: date,
+      expiration: expiration,
+      vet: vet_id,
+    },
+    // { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
+    // { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
+    // {
+    //   id: 4,
+    //   vaccine: 'Leptospirosis',
+    //   date: '',
+    //   expiration: '',
+    //   vet: '',
+    // },
+    // { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
+  ];
+
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);

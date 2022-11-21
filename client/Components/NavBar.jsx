@@ -24,7 +24,7 @@ export default function NavBar() {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             Pet Info
           </Typography>
-          <Button color='inherit'>Login</Button>
+          <Button color='inherit'>Log Out</Button>
         </Toolbar>
       </AppBar>
     </Box>
