@@ -9,12 +9,12 @@ import {
   Tooltip,
 } from 'recharts';
 const data = [
-  { name: 'Jan 2022', uv: 400, pv: 2400, amt: 2400 },
-  { name: 'Feb 2022', uv: 400, pv: 2400, amt: 2400 },
-  { name: 'Mar 2022', uv: 400, pv: 2400, amt: 2400 },
-  { name: 'Apr 2022', uv: 400, pv: 2400, amt: 2400 },
-  { name: 'May 2022', uv: 400, pv: 2400, amt: 2400 },
-  { name: 'June 2022', uv: 400, pv: 2400, amt: 2400 },
+  { name: 'June 2022', weight: 34 },
+  { name: 'July 2022', weight: 32 },
+  { name: 'Aug 2022', weight: 29 },
+  { name: 'Sept 2022', weight: 27 },
+  { name: 'Oct 2022', weight: 31 },
+  { name: 'Nov 2022', weight: 30 },
 ];
 
 const WeightChart = () => {
@@ -25,7 +25,7 @@ const WeightChart = () => {
       data={data}
       margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
     >
-      <Line type='monotone' dataKey='uv' stroke='#8884d8' />
+      <Line type='monotone' dataKey='weight' stroke='#f24c4e' />
       <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
       <XAxis dataKey='name' />
       <YAxis />
