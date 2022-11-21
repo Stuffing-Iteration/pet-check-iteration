@@ -23,12 +23,12 @@ const AddVaccine = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = async () => {
+    // const { vaccine, date, expiration, location, pet_id, vet_id } = req.body;
     // const data = {
     //   vaccine,
-    //   price,
-    //   siteNumber,
-    //   description,
-    //   location: { lat: parseInt(latitude), lng: parseInt(longitude) },
+    //   date,
+    //   expiration,
+    //   location,
     // };
     // const card = await axios.post('http://localhost:8080/cards/add', data);
     // const newCards = [...cards, card.data];
@@ -92,7 +92,7 @@ const AddVaccine = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type='submit'>Submit</Button>
+          <Button onClick={handleClick}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

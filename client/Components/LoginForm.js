@@ -17,6 +17,7 @@ function LoginForm({ Login, error }) {
         <div className='form-group'>
           <label htmlFor='name'>Name:</label>
           <input
+            autoComplete='off'
             type='text'
             name='name'
             id='name'
@@ -27,6 +28,7 @@ function LoginForm({ Login, error }) {
         <div className='form-group'>
           <label htmlFor='email'>Email:</label>
           <input
+            autoComplete='off'
             type='email'
             name='email'
             id='email'
@@ -37,6 +39,7 @@ function LoginForm({ Login, error }) {
         <div className='form-group'>
           <label htmlFor='password'>Password:</label>
           <input
+            autoComplete='off'
             type='password'
             name='password'
             id='password'
