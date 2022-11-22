@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './petProfile.scss';
+import './petProfileStyle.scss';
 import PetInfo from './PetInfo';
 import VaccineRecord from './VaccineRecord';
 import Appointments from './Appointments';
