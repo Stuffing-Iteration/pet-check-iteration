@@ -13,17 +13,14 @@ module.exports = {
     devServer: {
         port: '8080',
         host: 'localhost',
+        historyApiFallback: true,
         static: {
             directory: path.resolve(__dirname, 'client'),
             publicPath: '/'
         },
         liveReload: true,
         proxy: {
-            context: ['/api'],
-            target: 'https://localhost8080/',
-            router: () => 'https://locahost:3000',
-            secure: false,
-            changeOrigin: true,
+            '/api': 'http://localhost:3000'
         }
     },
     resolve: {
@@ -43,6 +40,7 @@ module.exports = {
             },
             {
                 test: /\.s?css$/i,
+                exclude: /node_modules/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
@@ -51,4 +49,6 @@ module.exports = {
         title: 'Webpack App',
         template: './index.html'
     })],
+
+    devtool: 'source-map',
 }

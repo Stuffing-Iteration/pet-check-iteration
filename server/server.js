@@ -14,11 +14,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(express.static(path.resolve(__dirname, '/client')));
-
-app.get('/', (req, res) => {
-  res.status(200).send('Hello from the back-end')
-  
-});
+app.use((req, res, next) => {
+  console.log(`${req.method} request to ${req.url}`);
+  next();
+  return;
+})
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -26,8 +26,8 @@ app.get('/', (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////
 
 // Adding new users to the DB
-app.post('/users', userController.createUser, (req, res) => {
-  res.status(200).send('user added');
+app.post('/api/users', userController.createUser, (req, res) => {
+  res.status(200).json({ userId: res.locals.userId});
 })
 
 // Signing in existing users
@@ -153,6 +153,7 @@ app.delete('/meds/:medid', (req, res) => {
 // ERROR HANDLERS:
 // local
 app.use('*', (req, res) => {
+  console.log('Default route handler for:\n' + `${req.method} request to ${req.url}`)
   res.status(404).send('404: Not Found');
 });
 // global 
