@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.css';
-import {Routes, Route, Link} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LoginPage from './Components/LoginPage';
 import SignUpPage from './Components/SignupPage';
 import UserProfile from './Components/UserProfile';
@@ -11,9 +11,7 @@ function App() {
 
   return (
     <>
-      <Link to='/signup'>Signup Page</Link>
       <Routes>
-        
         <Route path='/' element={<LoginPage/>} />
         <Route path='/signup' element={<SignUpPage/>} />
         <Route path='/pets/:userId' element={<UserProfile/>} />

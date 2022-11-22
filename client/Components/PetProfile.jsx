@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './petProfileStyle.scss';
 import PetInfo from './PetInfo';
 import VaccineRecord from './VaccineRecord';
@@ -50,15 +51,17 @@ import NavBar from './NavBar';
 // };
 
 const PetProfile = () => {
+
+  const {petId} = useParams();
   // create api call with useEffect to give pet information to components
   const [petInfo, setPetInfo] = useState('');
-  const [vaccine, setVaccine] = useState('');
-  const [appt, setAppt] = useState('');
-  const [medication, setMedication] = useState('');
+  const [vaccines, setVaccine] = useState('');
+  const [appts, setAppt] = useState('');
+  const [medications, setMedication] = useState('');
 
   //Will work with Azzie
   const getPets = () => {
-    fetch('http://localhost:3000/pets/1')
+    fetch(`/api/pets/${petId}`)
       .then((response) => {
         return response.json();
       })
@@ -80,27 +83,29 @@ const PetProfile = () => {
 
   const getVaccine = () => {
     // const data = await axios.get('https://localhost:3000/vax/1');
-    fetch('http://localhost:3000/vax/1')
+    fetch(`/api/vax/${petId}`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         console.log('data from fetch', data);
-        setVaccine({
-          vaccine: data[0].vaccine,
-          date: data[0].date,
-          expiration: data[0].expiration,
-          location: data[0].location,
-          pet_id: data[0].pet_id,
-          vet_id: data[0].vet_id,
-        });
-        console.log('vaccine info', vaccine);
+        setVaccine(data);
+        // setVaccine({
+        //   vaccine: data[0].vaccine,
+        //   date: data[0].date,
+        //   expiration: data[0].expiration,
+        //   location: data[0].location,
+        //   pet_id: data[0].pet_id,
+        //   vet_id: data[0].vet_id,
+        // });
+        console.log('vaccine info', vaccines);
         // setVaccine(data);
       })
       .catch((err) => console.log(err));
   };
+
   const getAppt = () => {
-    fetch('http://localhost:3000/appts/1')
+    fetch(`/api/appts/${petId}`)
       .then((response) => {
         return response.json();
       })
@@ -113,15 +118,16 @@ const PetProfile = () => {
           vet: data[0].vet,
           reason: data[0].reason,
         });
-        console.log('appointment info', appt);
+        console.log('appointment info', appts);
       })
       .catch((err) => console.log(err));
     // setAppt(data);
   };
+  
   const getMed = () => {
     // const data = await axios.get('https://localhost:3000/meds/1');
     // setMedication(data);
-    fetch('http://localhost:3000/meds/1')
+    fetch(`/api/meds/${petId}`)
       .then((response) => {
         return response.json();
       })
@@ -133,7 +139,7 @@ const PetProfile = () => {
           instructions: data[0].instructions,
           reason: data[0].reason,
         });
-        console.log('medication info', medication);
+        console.log('medication info', medications);
         // setVaccine(data);
       })
       .catch((err) => console.log(err));
@@ -162,9 +168,9 @@ const PetProfile = () => {
 
       <div className='profile-container'>
         <PetInfo info={petInfo} />
-        <VaccineRecord vaccineInfo={vaccine} />
-        <Appointments appt={appt} />
-        <Medication med={medication} />
+        <VaccineRecord vaccineInfo={vaccines} />
+        <Appointments appt={appts} />
+        <Medication med={medications} />
         <Weight />
       </div>
     </>

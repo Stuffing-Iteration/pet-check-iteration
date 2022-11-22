@@ -1,9 +1,14 @@
 import React from "react";
+import SignupForm from "./SignupForm.js";
 
-function Signup(){
+function SignupPage(){
 
     return(
-        <h1>signup page</h1>
+        <div className='App'>
+            <div className='Welcome'>
+                <SignupForm />
+            </div>
+        </div>
     )
 }
-export default Signup
+export default SignupPage;

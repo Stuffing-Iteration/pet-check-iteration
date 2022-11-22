@@ -63,11 +63,13 @@ const submitHandler = (e) => {
         }
         return data
         }
-       ).then((data) => {
+       )
+       .then((data) => {
         if(data.found){
         navigate(`/pets/${data.user.id}`)}
         return data
-       }).catch((err) =>{
+       })
+       .catch((err) =>{
     //alert('login was unsuccessful')
        setError('error')
        console.log(err)}
