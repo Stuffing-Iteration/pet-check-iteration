@@ -31,7 +31,7 @@ app.post('/users', userController.createUser, (req, res) => {
 })
 
 // Signing in existing users
-app.post('/login', userController.verifyUser, (req, res) => {
+app.post('api/login', userController.verifyUser, (req, res) => {
   const response = {
     user: res.locals.user,
     found: res.locals.found

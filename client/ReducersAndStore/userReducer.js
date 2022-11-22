@@ -5,7 +5,7 @@ const initialState = {
     username: ''
 };
 
-const petReducers = (state = initialState, action) => {
+const userReducers = (state = initialState, action) => {
     switch (action.type) { 
         case types.LOG_IN:
             return {
@@ -15,4 +15,4 @@ const petReducers = (state = initialState, action) => {
         
     }
 }
-export default petReducers;
+export default puserReducers;

@@ -37,7 +37,7 @@ function Login() {
 const [details, setDetails] = useState({ name: '', password: '' });
 const submitHandler = (e) => {
     e.preventDefault();
-        fetch('/login', {
+        fetch('api/login', {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
@@ -46,18 +46,24 @@ const submitHandler = (e) => {
             body: JSON.stringify({
                 username: details.name,
                 password: details.password,
-              })
-        .then((data) => data.json())
+              })})
+        .then((data) => {
+            if(data.status === 200)
+             data.json()
+            else{
+                throw new Error("data status was not 200")
+            }})
         .then((data) => {
         if(data.error){
             alert('Wrong username or password')
+            setError('error')
         }if(data.found){
-            
             navigate(`/userprofile/${data.user.id}`)
         }}
+       ).catch((err) =>
+       console.log(err)
        )
-        })
-  };
+    }
 
   return(
     <div className='centered'>
@@ -115,6 +121,6 @@ const submitHandler = (e) => {
       )}
     </>
   );*/
-}
 
+}
 export default Login
