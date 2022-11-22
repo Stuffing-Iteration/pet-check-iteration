@@ -51,4 +51,6 @@ module.exports = {
         title: 'Webpack App',
         template: './index.html'
     })],
+
+    devtool: 'source-map',
 }
