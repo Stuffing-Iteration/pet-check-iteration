@@ -1,8 +1,8 @@
 const path = require('path');
 const db = require('../db.js');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 12;
-let idNum = 1;
 
 const userController = {};
 
@@ -17,7 +17,10 @@ userController.createUser = (req, res, next) => {
       return db.query('SELECT id FROM users WHERE username=$1', [username])
     })
     .then((data) => {
-      res.locals.userId = data.rows[0].id;
+      res.locals = {
+        username: username,
+        userId: data.rows[0].id
+      }
       next();
       return;
     })
@@ -31,7 +34,6 @@ userController.verifyUser = (req, res, next) => {
     //console.log('inside verifyUser');
     
     const { username, password } = req.body;
-    
     const verifyQ = 'SELECT * FROM users WHERE username = $1;';
     const params = [username];
 
@@ -53,6 +55,53 @@ userController.verifyUser = (req, res, next) => {
       })
       .catch((err => {return next({msg: 'ERROR IN userController.verifyUser', err: err})}));
 }
+
+
+userController.createJWT = (req, res, next) => {
+  // expect incoming res.locals to have username and userId
+  const jbody = {
+    issuedBy: 'pet-check',
+    username: res.locals.username,
+    userId: res.locals.userId
+  }
+  // Create JWT with 5min lifespan and send it back in a cookie for storage
+  const thisJWT =  jwt.sign(jbody, process.env.TOKEN_SECRET, { expiresIn: '900s' } );
+  res.cookie('token', thisJWT, {
+    httpOnly: true,
+    signed: true
+  })
+  next();
+  return; 
+}
+
+
+userController.verifyJWT = (req, res, next) => {
+  const token = req.signedCookies.token;
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+    if (err) {
+      console.error(err)
+      res.locals.verified = false
+     } else {
+      res.locals.verified = true;
+      res.locals.username = data.username;
+      res.locals.userId = data.userId;
+    };
+    next();
+    return;
+  });
+}
+
+
+userController.createRefreshToken = async (req, res, next) => {
+
+}
+
+
+userController.verifyRefreshToken = (req, res, next) => {
+
+}
+
+
 
 // ------ request body template for testing ------- //
 // {
