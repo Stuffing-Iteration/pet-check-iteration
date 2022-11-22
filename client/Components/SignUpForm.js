@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SignupForm() {
-    const username = React.createRef();
-    const email = React.createRef();
-    const p1 = React.createRef();
-    const p2 = React.createRef();
+    const navigate = useNavigate();
+
+    // Use lazy references to get input content
+    const usernameInput = React.createRef();
+    const emailInput = React.createRef();
+    const p1Input = React.createRef();
+    const p2Input = React.createRef();
 
     return (
         <form className="login-form" onSubmit={handleSubmit}>
@@ -13,19 +16,19 @@ function SignupForm() {
                 <h2>Signup</h2>
                 <div className="form-group">
                     <label htmlFor="name">Username:</label>
-                    <input type="text" name="name" id="name" ref={username} />
+                    <input type="text" name="name" id="name" ref={usernameInput} />
                 </div>
                 <div className="form-group">
                     <label htmlFor='email'>Email:</label>
-                    <input type="email" name="email" id="email" ref={email} />
+                    <input type="email" name="email" id="email" ref={emailInput} />
                 </div>
                 <div className ="form-group">
                     <label htmlFor='password'>Password:</label>
-                    <input type='password' name='password' id='password' ref={p1}/>
+                    <input type='password' name='password' id='password' ref={p1Input}/>
                 </div>
                 <div className ="form-group">
                     <label htmlFor='confirmPassword'>Confirm Password:</label>
-                    <input type='password' name='confirmPassword' id='confirmPassword' ref={p2}/>
+                    <input type='password' name='confirmPassword' id='confirmPassword' ref={p2Input}/>
                 </div>
                 <div>
                     <input type='submit' value="SIGNUP" />
@@ -38,10 +41,10 @@ function SignupForm() {
         event.preventDefault();
 
         // Confirm that the form is filled out correctly
-        const username = username.current.value
-        const email = email.current.value;
-        const p1 = p1.current.value;
-        const p2 = p2.current.value;
+        const username = usernameInput.current.value
+        const email = emailInput.current.value;
+        const p1 = p1Input.current.value;
+        const p2 = p2Input.current.value;
         
         if (username === '') {
             alert('Username cannot be empty');
@@ -57,9 +60,18 @@ function SignupForm() {
             return;
         }
 
-        fetch()
-        .then()
-        .catch();
+        fetch('/users', {
+            method: 'POST',
+            body: JSON.stringify({username, password: p1, email})
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            navigate('/userprofile/' + data.userId)
+        })
+        .catch((rejection) => {
+            console.error(rejection)
+            alert('Signup unsuccessful')
+        });
     }
 }
 

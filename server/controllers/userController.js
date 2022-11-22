@@ -1,31 +1,23 @@
 const path = require('path');
 const db = require('../db.js');
 const bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(12);
-
-const userController = {};
-// const SALT_ROUNDS = 12;
+const SALT_ROUNDS = 12;
 let idNum = 1;
 
+const userController = {};
+
 userController.createUser = (req, res, next) => {
-    console.log('inside userController.creatUser');
     const { username, password, email } = req.body;
-    // console.log('req.body', req.body);
-    // let hashedPw;
-    // bcrypt.hashSync(password, SALT_ROUNDS, (err, hash) => {
-    //   hashedPw = hash;
-    //   console.log('bcrypt hashed pw', hashedPw);
-    // });
-    const hashed = bcrypt.hashSync(password, salt);
-    // console.log('hashedpassword', hashedPw);
+    const hashed = bcrypt.hashSync(password, SALT_ROUNDS);
     const addQ = 'INSERT INTO users(id, username, password, email) VALUES ($1, $2, $3, $4);';
     const params = [idNum, username, hashed, email]
     db.query(addQ, params)
-        .then(() => {
-          idNum++;
-          return next();
-        })
-        .catch((err) => {return next({msg: 'ERROR IN userController.createUser', err: err})});
+    .then((data) => {
+      res.locals.userId = idNum;
+      next();
+      return;
+    })
+    .catch((err) => {return next({msg: 'ERROR IN userController.createUser', err: err})});
 }
 
 

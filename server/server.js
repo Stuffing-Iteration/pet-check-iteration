@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 // Adding new users to the DB
 app.post('/users', userController.createUser, (req, res) => {
-  res.status(200).send('user added');
+  res.status(200).json({ userId: res.locals.userId});
 })
 
 // Signing in existing users
@@ -127,6 +127,7 @@ app.delete('/meds/:petid', (req, res) => {
 // ERROR HANDLERS:
 // local
 app.use('*', (req, res) => {
+  console.log('Default route handler for:\n' + `${req.method} request to ${req.url}`)
   res.status(404).send('404: Not Found');
 });
 // global 
