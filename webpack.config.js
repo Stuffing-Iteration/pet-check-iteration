@@ -13,6 +13,7 @@ module.exports = {
     devServer: {
         port: '8080',
         host: 'localhost',
+        historyApiFallback: true,
         static: {
             directory: path.resolve(__dirname, 'client'),
             publicPath: '/'
@@ -43,6 +44,7 @@ module.exports = {
             },
             {
                 test: /\.s?css$/i,
+                exclude: /node_modules/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
