@@ -70,7 +70,7 @@ app.post('/api/vax', petController.addVaccination, (req, res) => {
 })
 
 //Add a new weight
-app.post('/weights', petController.addWeights, (req, res) => {
+app.post('/api/weights', petController.addWeights, (req, res) => {
   res.status(200).send('New weight added!')
 })
 
