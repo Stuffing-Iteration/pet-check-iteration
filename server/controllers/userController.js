@@ -25,7 +25,6 @@ userController.verifyUser = (req, res, next) => {
     console.log('inside verifyUser');
     const { username, password } = req.body;
     const hashed = bcrypt.hashSync(password, salt);
-    // if (bcrypt.compareSync(, hashed));
 
     const verifyQ = 'SELECT * FROM users WHERE username = $1;';
     const params = [username];
