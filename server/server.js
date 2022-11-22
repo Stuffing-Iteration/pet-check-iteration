@@ -31,7 +31,7 @@ app.post('/api/users', userController.createUser, (req, res) => {
 })
 
 // Signing in existing users
-app.post('/login', userController.verifyUser, (req, res) => {
+app.post('/api/login', userController.verifyUser, (req, res) => {
   const response = {
     user: res.locals.user,
     found: res.locals.found
@@ -45,27 +45,27 @@ app.post('/login', userController.verifyUser, (req, res) => {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 // Add a new pet
-app.post('/pets', petController.addPet, (req, res) => {
+app.post('/api/pets', petController.addPet, (req, res) => {
   res.status(200).send('New pet added!')
 })
 
 // Add a new veterinarian
-app.post('/vets', petController.addVet, (req, res) => {
+app.post('/api/vets', petController.addVet, (req, res) => {
   res.status(200).send('New veterinarian added!')
 })
 
 // Add a new medication
-app.post('/meds', petController.addMedication, (req, res) => {
+app.post('/api/meds', petController.addMedication, (req, res) => {
   res.status(200).send('New medication added!')
 })
 
 // Add a new appointment
-app.post('/appts', petController.addAppointment, (req, res) => {
+app.post('/api/appts', petController.addAppointment, (req, res) => {
   res.status(200).send('New appointment added!')
 })
 
 // Add a new vaccination
-app.post('/vax', petController.addVaccination, (req, res) => {
+app.post('/api/vax', petController.addVaccination, (req, res) => {
   res.status(200).send('New vaccination added!')
 })
 
@@ -75,28 +75,28 @@ app.post('/vax', petController.addVaccination, (req, res) => {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 // ---- Get all of a users pets --- //
-app.get('/pets/:userid', petController.getUserPets, (req, res) => {
+app.get('/api/pets/:userid', petController.getUserPets, (req, res) => {
   res.status(200).json(res.locals.retrievedPets);
 })
 
 // ----- Get all of a users veterinarians -----//
-app.get('/vets/:userid', petController.getUserVets, (req, res) => {
+app.get('/api/vets/:userid', petController.getUserVets, (req, res) => {
   res.status(200).json(res.locals.retrievedVets);
 })
 
 
 // --- Get all of a pet's medications ---- //
-app.get('/meds/:petid', petController.getPetMedications, (req, res) => {
+app.get('/api/meds/:petid', petController.getPetMedications, (req, res) => {
   res.status(200).json(res.locals.retrievedMeds);
 })
 
 // ------ Get all of a pet's vaccinations ------ //
-app.get('/vax/:petid', petController.getPetVaccinations, (req, res) => {
+app.get('/api/vax/:petid', petController.getPetVaccinations, (req, res) => {
   res.status(200).json(res.locals.retrievedVax);
 })
 
 // ------ Get all of a pet's appointments ---- //
-app.get('/appts/:petid', petController.getPetAppointments, (req, res) => {
+app.get('/api/appts/:petid', petController.getPetAppointments, (req, res) => {
   res.status(200).json(res.locals.retrievedAppts);
 })
 
@@ -106,16 +106,16 @@ app.get('/appts/:petid', petController.getPetAppointments, (req, res) => {
 
 // do we need to speciiy the route to a specific appointment/medication/vaccination??
 
-app.delete('/appts/:apptid', petController.deleteAppointment, (req, res) => {
+app.delete('/api/appts/:apptid', petController.deleteAppointment, (req, res) => {
   res.status(200).send('Appointment removed!');
 });
 
-app.delete('/vax/:vaxid', (req, res) => {
+app.delete('/api/vax/:vaxid', (req, res) => {
   res.status(200).send('Vaccination removed!');
 });
 
 
-app.delete('/meds/:medid', (req, res) => {
+app.delete('/api/meds/:medid', (req, res) => {
   res.status(200).send('Medication removed!');
 });
 

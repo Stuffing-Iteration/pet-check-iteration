@@ -23,7 +23,7 @@ const AddVaccine = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = async () => {
-    await fetch('http://localhost:3000/vax', {
+    await fetch('/api/vax', {
       method: 'POST',
       body: {
         vaccine: vaccine,
