@@ -5,7 +5,7 @@ const salt = bcrypt.genSaltSync(12);
 
 const userController = {};
 // const SALT_ROUNDS = 12;
-let idNum = 1;
+
 
 userController.createUser = (req, res, next) => {
     console.log('inside userController.creatUser');
@@ -13,11 +13,11 @@ userController.createUser = (req, res, next) => {
   
     const hashed = bcrypt.hashSync(password, salt);
 
-    const addQ = 'INSERT INTO users(id, username, password, email) VALUES ($1, $2, $3, $4);';
-    const params = [idNum, username, hashed, email]
+    const addQ = 'INSERT INTO users(username, password, email) VALUES ($1, $2, $3);';
+    const params = [username, hashed, email]
     db.query(addQ, params)
-        .then(() => {
-          idNum++;
+        .then((response) => {
+          console.log(response)
           return next();
         })
         .catch((err) => {return next({msg: 'ERROR IN userController.createUser', err: err})});

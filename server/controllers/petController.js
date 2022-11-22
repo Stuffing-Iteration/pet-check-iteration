@@ -2,11 +2,6 @@ const db = require('../db.js');
 
 const petController = {};
 
-let petId = 1;
-let medId = 1;
-let vetId = 3;
-let vaxId = 2;
-let apptId = 2;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // ------------------------------- Adding Pet Info ----------------------------------- //
@@ -18,9 +13,8 @@ petController.addPet = (req, res, next) => {
   const { name, owner_id, species, breed, weight, color, age, vet_id } =
     req.body;
   const qText =
-    'INSERT INTO pets (id, name, owner_id, species, breed, weight, color, age, vet_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);';
+    'INSERT INTO pets (name, owner_id, species, breed, weight, color, age, vet_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);';
   const params = [
-    petId,
     name,
     owner_id,
     species,
@@ -34,7 +28,6 @@ petController.addPet = (req, res, next) => {
     .then((result) => {
       console.log('returned from db query: ', result);
       res.locals.petAdded = true;
-      petId++;
       return next();
     })
     .catch((err) => {
@@ -48,12 +41,11 @@ petController.addVet = (req, res, next) => {
   console.log('add vet req body: ', req.body);
   const { vet, location, phone, clinic, user_id } = req.body;
   const qText =
-    'INSERT INTO vets (id, vet, location, phone, clinic, user_id) VALUES ($1, $2, $3, $4, $5, $6);';
-  const params = [vetId, vet, location, phone, clinic, user_id];
+    'INSERT INTO vets (vet, location, phone, clinic, user_id) VALUES ($1, $2, $3, $4, $5);';
+  const params = [vet, location, phone, clinic, user_id];
   db.query(qText, params)
     .then((result) => {
       console.log('returned from db query: ', result);
-      vetId++;
       return next();
     })
     .catch((err) => {
@@ -67,12 +59,11 @@ petController.addVaccination = (req, res, next) => {
   console.log('add vax req body: ', req.body);
   const { vaccine, date, expiration, location, pet_id, vet_id } = req.body;
   const qText =
-    'INSERT INTO vaccinations (id, vaccine, date, expiration, location, pet_id, vet_id ) VALUES ($1, $2, $3, $4, $5, $6, $7);';
-  const params = [vaxId, vaccine, date, expiration, location, pet_id, vet_id];
+    'INSERT INTO vaccinations (vaccine, date, expiration, location, pet_id, vet_id ) VALUES ($1, $2, $3, $4, $5, $6);';
+  const params = [vaccine, date, expiration, location, pet_id, vet_id];
   db.query(qText, params)
     .then((result) => {
       console.log('returned from db query: ', result);
-      vaxId++;
       return next();
     })
     .catch((err) => {
@@ -89,20 +80,18 @@ petController.addMedication = (req, res, next) => {
   console.log('add med req body: ', req.body);
   const { medication, dosage, instructions, pet_id, vet_id, reason } = req.body;
   const qText =
-    'INSERT INTO medications (id, medication, dosage, instructions, pet_id, vet_id, reason) VALUES ($1, $2, $3, $4, $5, $6, $7);';
+    'INSERT INTO medications (medication, dosage, instructions, reason, pet_id, vet_id) VALUES ($1, $2, $3, $4, $5, $6);';
   const params = [
-    medId,
     medication,
     dosage,
     instructions,
-    pet_id,
-    vet_id,
     reason,
+    pet_id,
+    vet_id
   ];
   db.query(qText, params)
     .then((result) => {
       console.log('returned from db query: ', result);
-      medId++;
       return next();
     })
     .catch((err) => {
@@ -117,14 +106,13 @@ petController.addMedication = (req, res, next) => {
 // ------------------------ Add a new Appointment ------------------------ //
 petController.addAppointment = (req, res, next) => {
   console.log('add appt req body: ', req.body);
-  const { date, time, location, vet, pet_id, vet_id, reason } = req.body;
+  const { date, time, location, pet_id, vet_id, reason } = req.body;
   const qText =
-    'INSERT INTO appointments (id, date, time, location, vet, pet_id, vet_id, reason) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);';
-  const params = [apptId, date, time, location, vet, pet_id, vet_id, reason];
+    'INSERT INTO appointments (date, time, reason, location, pet_id, vet_id) VALUES ($1, $2, $3, $4, $5, $6);';
+  const params = [date, time, reason, location, pet_id, vet_id];
   db.query(qText, params)
     .then((result) => {
       console.log('returned from db query: ', result);
-      apptId++;
       return next();
     })
     .catch((err) => {
@@ -238,8 +226,9 @@ petController.getUserVets = (req, res, next) => {
 // ------ Deleting an appointment ------ //
 petController.deleteAppointment = (req, res, next) => {
   console.log('inside petController.deleteAppointment');
-  const { apptId } = req.body;
-  const params = [apptId];
+  const { apptid } = req.params;
+  console.log('delete request params ', req.params);
+  const params = [apptid];
   const deleteQ = 'DELETE FROM appointments WHERE id = $1';
   db.query(deleteQ, params)
     .then(() => {
@@ -253,8 +242,8 @@ petController.deleteAppointment = (req, res, next) => {
 // ------ Deleting a vaccination ------ //
 petController.deleteVax = (req, res, next) => {
   console.log('inside petController.deleteVax');
-  const { vaxId } = req.body;
-  const params = [vaxId];
+  const { vaxid } = req.body;
+  const params = [vaxid];
   const deleteQ = 'DELETE FROM vaccinations WHERE id = $1';
   db.query(deleteQ, params)
     .then(() => {
