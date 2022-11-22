@@ -20,10 +20,23 @@ input, button {
   justify-content: center;
   background-color: gray;
 }
-
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(
+    to right,
+    #ffce00 50%,
+    #ffce00 50%,
+    #fe4880
+  );
+}
 .login-form {
-  display: block;
+  display: flex;
   position: relative;
+  justify-content: center;
+  align-self: center;
 }
 
 .login-form:after {
@@ -76,7 +89,7 @@ input, button {
   width: 100%;
   padding: 10px 15px;
   background-color: #f8f8f8;
-
+  
   border-radius: 8px;
   transition: 0.4s;
 }
@@ -125,4 +138,9 @@ input, button {
 .welcome h2 span {
   color: #fe4888;
   font-weight: 700;
+}
+#centered{
+  display: flex;
+  width: 100%;
+  height:100vh;
 }

@@ -26,9 +26,10 @@ userController.createUser = (req, res, next) => {
 
 
 userController.verifyUser = (req, res, next) => {
-    console.log('inside verifyUser');
+    //console.log('inside verifyUser');
+    
     const { username, password } = req.body;
-
+    
     const verifyQ = 'SELECT * FROM users WHERE username = $1;';
     const params = [username];
 

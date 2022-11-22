@@ -1,16 +1,23 @@
+
 import React, { useState } from 'react';
-import LoginForm from './LoginForm';
-import PetProfile from './PetProfile';
+import { useNavigate } from "react-router-dom";
+import { useDispatch} from "react-redux"
+import { loginActionCreator } from '../actionFolder/action';
+import * as actions from '../actionFolder/action'
 
 function Login() {
-  const adminUser = {
-    email: 'admin@admin.com',
-    password: 'abc',
-  };
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
+    const dispatch = useDispatch();
+//   const adminUser = {
+//     email: 'admin@admin.com',
+//     password: 'abc',
+//   };
+/*
 
   const [user, setUser] = useState({ name: '', email: '' });
 
-  const [error, setError] = useState('');
+  
 
   const Login = (details) => {
     if (
@@ -28,9 +35,84 @@ function Login() {
 
   const LogOut = () => {
     setUser({ name: '', email: '' });
-  };
+  };*/
 //turn pet profile in link
-  return (
+const [details, setDetails] = useState({ name: '', password: '' });
+const submitHandler = (e) => {
+    e.preventDefault();
+        fetch('api/login', {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                username: details.name,
+                password: details.password,
+              })})
+        .then((data) => {
+            if(data.status === 200)
+             return data.json()
+            else{
+                throw new Error("data status was not 200")
+            }})
+        .then((data) => {
+        if(data.found){
+            dispatch(actions.loginActionCreator(data.user.username, data.user.id))
+            // dispatch({type: 'SET_CURRENT_INDEX', payload: [props.column, props.index]})
+        }
+        return data
+        }
+       )
+       .then((data) => {
+        if(data.found){
+        navigate(`/pets/${data.user.id}`)}
+        return data
+       })
+       .catch((err) =>{
+    //alert('login was unsuccessful')
+       setError('error')
+       console.log(err)}
+       )
+    }
+
+  return(
+    <div className='centered'>
+<form className='login-form' onSubmit={submitHandler}>
+      <div className='form-inner'>
+        <h2>Login</h2>
+        {error != ' ' ? <div className='error'></div> : ''}
+        <div className='form-group'>
+          <label htmlFor='name'>Name:</label>
+          <input
+            autoComplete='off'
+            type='text'
+            name='name'
+            id='name'
+            onChange={(e) => setDetails({ ...details, name: e.target.value })}
+            value={details.name}
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='password'>Password:</label>
+          <input
+            autoComplete='off'
+            type='password'
+            name='password'
+            id='password'
+            onChange={(e) =>
+              setDetails({ ...details, password: e.target.value })
+            }
+            value={details.password}
+          />
+        </div>
+        <div>
+          <input type='submit' value='LOGIN' />
+        </div>
+      </div>
+    </form></div>
+  )
+/*return (
 
     <>
       {user.email != '' ? (
@@ -38,7 +120,7 @@ function Login() {
           {/* <h2>
             Welcome, <span>{user.name}</span>
           </h2>
-          <button onClick={LogOut}>Logout</button> */}
+          <button onClick={LogOut}>Logout</button> /}
           <PetProfile />
         </>
       ) : (
@@ -49,7 +131,7 @@ function Login() {
         </div>
       )}
     </>
-  );
-}
+  );*/
 
+}
 export default Login
