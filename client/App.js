@@ -1,53 +1,23 @@
-import React, { useState } from 'react';
-import LoginForm from './Components/LoginForm';
+import React from 'react';
 import './index.css';
-import PetProfile from './components/PetProfile';
+import { Routes, Route } from 'react-router-dom';
+import LoginPage from './Components/LoginPage';
+import SignUpPage from './Components/SignupPage';
+import UserProfile from './Components/UserProfile';
+import PetProfile from './Components/PetProfile';
+
 
 function App() {
-  const adminUser = {
-    email: 'admin@admin.com',
-    password: 'abc',
-  };
-
-  const [user, setUser] = useState({ name: '', email: '' });
-
-  const [error, setError] = useState('');
-
-  const Login = (details) => {
-    if (
-      details.email == adminUser.email &&
-      details.password == adminUser.password
-    ) {
-      setUser({
-        name: details.name,
-        email: details.email,
-      });
-    } else {
-      setError('details dont matcadm');
-    }
-  };
-
-  const LogOut = () => {
-    setUser({ name: '', email: '' });
-  };
 
   return (
     <>
-      {user.email != '' ? (
-        <>
-          {/* <h2>
-            Welcome, <span>{user.name}</span>
-          </h2>
-          <button onClick={LogOut}>Logout</button> */}
-          <PetProfile />
-        </>
-      ) : (
-        <div className='App'>
-          <div className='Welcome'>
-            <LoginForm Login={Login} error={error} />
-          </div>
-        </div>
-      )}
+      <Routes>
+        <Route path='/' element={<LoginPage/>} />
+        <Route path='/signup' element={<SignUpPage/>} />
+        <Route path='/userprofile/:userId' element={<UserProfile/>} />
+        <Route path='/petprofile/:petId' element={<PetProfile/>} />
+        <Route path='/*' element={<h1>Page Not Found!</h1>} />
+      </Routes>
     </>
   );
 }

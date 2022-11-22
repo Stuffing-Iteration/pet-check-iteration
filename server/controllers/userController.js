@@ -1,26 +1,29 @@
 const path = require('path');
 const db = require('../db.js');
 const bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(12);
+const SALT_ROUNDS = 12;
+let idNum = 1;
 
 const userController = {};
-// const SALT_ROUNDS = 12;
-
 
 userController.createUser = (req, res, next) => {
-    console.log('inside userController.creatUser');
     const { username, password, email } = req.body;
-  
-    const hashed = bcrypt.hashSync(password, salt);
-
+    const hashed = bcrypt.hashSync(password, SALT_ROUNDS);
     const addQ = 'INSERT INTO users(username, password, email) VALUES ($1, $2, $3);';
     const params = [username, hashed, email]
     db.query(addQ, params)
-        .then((response) => {
-          console.log(response)
-          return next();
-        })
-        .catch((err) => {return next({msg: 'ERROR IN userController.createUser', err: err})});
+    .then((data) => {
+      // TODO: This is janky, you should just do the insert with a return value
+      return db.query('SELECT id FROM users WHERE username=$1', [username])
+    })
+    .then((data) => {
+      res.locals.userId = data.rows[0].id;
+      next();
+      return;
+    })
+    .catch((err) => {
+      return next({msg: 'ERROR IN userController.createUser', err: err})
+    });
 }
 
 

@@ -20,8 +20,8 @@ const data = [
 const WeightChart = () => {
   return (
     <LineChart
-      width={600}
-      height={300}
+      width={300}
+      height={150}
       data={data}
       margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
     >
