@@ -1,8 +1,8 @@
-import * as types from '../actionsFolder/actionTypes';
+import * as types from '../actionFolder/actionTypes';
 
 const initialState = {
-    amountOfPets: 0,
-    username: ''
+    username: '',
+    userId: 0
 };
 
 const userReducers = (state = initialState, action) => {
@@ -10,9 +10,11 @@ const userReducers = (state = initialState, action) => {
         case types.LOG_IN:
             return {
                 ...state,
-                username: action.payload.info.username
+                username: action.payload.info,
+                userId: action.payload.id
               };
         
     }
+    return state
 }
-export default puserReducers;
+export default userReducers;

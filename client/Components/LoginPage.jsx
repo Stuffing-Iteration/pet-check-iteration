@@ -1,11 +1,14 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch} from "react-redux"
+import { loginActionCreator } from '../actionFolder/action';
+import * as actions from '../actionFolder/action'
 
 function Login() {
     const navigate = useNavigate();
     const [error, setError] = useState('');
+    const dispatch = useDispatch();
 //   const adminUser = {
 //     email: 'admin@admin.com',
 //     password: 'abc',
@@ -49,19 +52,25 @@ const submitHandler = (e) => {
               })})
         .then((data) => {
             if(data.status === 200)
-             data.json()
+             return data.json()
             else{
                 throw new Error("data status was not 200")
             }})
         .then((data) => {
-        if(data.error){
-            alert('Wrong username or password')
-            setError('error')
-        }if(data.found){
-            navigate(`/userprofile/${data.user.id}`)
-        }}
-       ).catch((err) =>
-       console.log(err)
+        if(data.found){
+            dispatch(actions.loginActionCreator(data.user.username, data.user.id))
+            // dispatch({type: 'SET_CURRENT_INDEX', payload: [props.column, props.index]})
+        }
+        return data
+        }
+       ).then((data) => {
+        if(data.found){
+        navigate(`/pets/${data.user.id}`)}
+        return data
+       }).catch((err) =>{
+    //alert('login was unsuccessful')
+       setError('error')
+       console.log(err)}
        )
     }
 
@@ -70,7 +79,7 @@ const submitHandler = (e) => {
 <form className='login-form' onSubmit={submitHandler}>
       <div className='form-inner'>
         <h2>Login</h2>
-        {error != '' ? <div className='error'></div> : ''}
+        {error != ' ' ? <div className='error'></div> : ''}
         <div className='form-group'>
           <label htmlFor='name'>Name:</label>
           <input

@@ -8,7 +8,7 @@ const userController = {};
 
 
 userController.createUser = (req, res, next) => {
-    console.log('inside userController.creatUser');
+    //console.log('inside userController.creatUser');
     const { username, password, email } = req.body;
   
     const hashed = bcrypt.hashSync(password, salt);
@@ -25,10 +25,11 @@ userController.createUser = (req, res, next) => {
 
 
 userController.verifyUser = (req, res, next) => {
-    console.log('inside verifyUser');
+    //console.log('inside verifyUser');
+    
     const { username, password } = req.body;
     const hashed = bcrypt.hashSync(password, salt);
-    console.log(username)
+    
     const verifyQ = 'SELECT * FROM users WHERE username = $1;';
     const params = [username];
 

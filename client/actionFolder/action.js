@@ -1,8 +1,9 @@
 import * as types from './actionTypes';
 
-export const loginActionCreator = (userInfo) => ({
+export const loginActionCreator = (username, id) => ({
     type: types.LOG_IN,
     payload: {
-      info : userInfo
+      info : username,
+      id: id
     }
   });
