@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 //////////////////////////////////////////////////////////////////////////////////////
 
 // Adding new users to the DB
-app.post('/users', userController.createUser, (req, res) => {
+app.post('/api/users', userController.createUser, (req, res) => {
   res.status(200).json({ userId: res.locals.userId});
 })
 

@@ -20,11 +20,7 @@ module.exports = {
         },
         liveReload: true,
         proxy: {
-            context: ['/api'],
-            target: 'https://localhost8080/',
-            router: () => 'https://locahost:3000',
-            secure: false,
-            changeOrigin: true,
+            '/api': 'http://localhost:3000'
         }
     },
     resolve: {

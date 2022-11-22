@@ -60,11 +60,22 @@ function SignupForm() {
             return;
         }
 
-        fetch('/users', {
+        const msgBody = JSON.stringify({username, password: p1, email});
+
+        fetch('api/users', {
             method: 'POST',
-            body: JSON.stringify({username, password: p1, email})
+            headers: {
+                'Content-Type': 'application/json',
+            },            
+            body: msgBody
         })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Create user status code has error')
+            }
+        })
         .then((data) => {
             navigate('/userprofile/' + data.userId)
         })
