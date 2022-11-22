@@ -31,7 +31,7 @@ app.post('/api/users', userController.createUser, (req, res) => {
 })
 
 // Signing in existing users
-app.post('/login', userController.verifyUser, (req, res) => {
+app.post('/api/login', userController.verifyUser, (req, res) => {
   const response = {
     user: res.locals.user,
     found: res.locals.found
@@ -69,6 +69,10 @@ app.post('/vax', petController.addVaccination, (req, res) => {
   res.status(200).send('New vaccination added!')
 })
 
+//Add a new weight
+app.post('/weights', petController.addWeights, (req, res) => {
+  res.status(200).send('New weight added!')
+})
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Updating Pet Info Routes ------------------------------ //

@@ -1,8 +1,6 @@
-const path = require('path');
 const db = require('../db.js');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 12;
-let idNum = 1;
 
 const userController = {};
 
@@ -30,7 +28,6 @@ userController.createUser = (req, res, next) => {
 userController.verifyUser = (req, res, next) => {
     console.log('inside verifyUser');
     const { username, password } = req.body;
-    const hashed = bcrypt.hashSync(password, salt);
 
     const verifyQ = 'SELECT * FROM users WHERE username = $1;';
     const params = [username];

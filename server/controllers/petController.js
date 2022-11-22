@@ -124,6 +124,28 @@ petController.addAppointment = (req, res, next) => {
 };
 // ----------------------------------------------------------------- //
 
+// ------------------------ Add a new Weight ------------------------ //
+petController.addWeights = (req, res, next) => {
+  console.log('add weight req body: ', req.body);
+  const { pet_id, date, weight, average } = req.body;
+  const qText =
+    'INSERT INTO weights (pet_id, date, weight, average) VALUES ($1, $2, $3, $4);';
+  const params = [pet_id, date, weight, average];
+  db.query(qText, params)
+    .then((result) => {
+      console.log('returned from db query: ', result);
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        errorMsg: 'Problem in addAppointment middleware',
+        err: err,
+      });
+    });
+}
+
+// ----------------------------------------------------------------- //
+
 /////////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Retrieving Pet Info Routes ------------------------------ //
 /////////////////////////////////////////////////////////////////////////////////////////
