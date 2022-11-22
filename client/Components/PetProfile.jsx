@@ -58,7 +58,7 @@ const PetProfile = () => {
 
   //Will work with Azzie
   const getPets = () => {
-    fetch('http://localhost:3000/pets/1')
+    fetch('/api/pets/1')
       .then((response) => {
         return response.json();
       })
@@ -80,7 +80,7 @@ const PetProfile = () => {
 
   const getVaccine = () => {
     // const data = await axios.get('https://localhost:3000/vax/1');
-    fetch('http://localhost:3000/vax/1')
+    fetch('/api/vax/1')
       .then((response) => {
         return response.json();
       })
@@ -100,7 +100,7 @@ const PetProfile = () => {
       .catch((err) => console.log(err));
   };
   const getAppt = () => {
-    fetch('http://localhost:3000/appts/1')
+    fetch('/api/appts/1')
       .then((response) => {
         return response.json();
       })
@@ -121,7 +121,7 @@ const PetProfile = () => {
   const getMed = () => {
     // const data = await axios.get('https://localhost:3000/meds/1');
     // setMedication(data);
-    fetch('http://localhost:3000/meds/1')
+    fetch('/api/meds/1')
       .then((response) => {
         return response.json();
       })

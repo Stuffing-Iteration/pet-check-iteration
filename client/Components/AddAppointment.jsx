@@ -26,7 +26,7 @@ const AddAppointment = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    fetch('http://localhost:3000/appts', {
+    fetch('/api/appts', {
       method: 'POST',
       body: {
         date: date,

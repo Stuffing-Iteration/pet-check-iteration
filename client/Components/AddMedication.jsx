@@ -26,7 +26,7 @@ const AddMedication = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = async () => {
-    fetch('http://localhost:3000/meds', {
+    fetch('/api/meds', {
       method: 'POST',
       body: {
         medication: medication,
