@@ -42,7 +42,7 @@ petController.addVet = (req, res, next) => {
   const { vet, location, phone, clinic, user_id } = req.body;
   const qText =
     'INSERT INTO vets (vet, location, phone, clinic, user_id) VALUES ($1, $2, $3, $4, $5);';
-  const params = [vet, location, phone, clinic, user_id];
+  const params = [vet, location, phone, clsinic, user_id];
   db.query(qText, params)
     .then((result) => {
       console.log('returned from db query: ', result);
@@ -223,6 +223,96 @@ petController.getUserVets = (req, res, next) => {
     );
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
+// ------------------------- Updating Pet Info Routes ------------------------------ //
+/////////////////////////////////////////////////////////////////////////////////////////
+
+// ----- Update a pet ----- //
+petController.updatePet = (req, res, next) => {
+  console.log(req.body)
+  const { name, owner_id, species, breed, weight, color, age, vet_id } = req.body;
+  const { petid } = req.params;
+
+  const qText = 'UPDATE pets SET name=$1, owner_id=$2, species=$3, breed=$4, weight=$5, color=$6, age=$7, vet_id=$8 WHERE id=$9'
+  const params = [name, owner_id, species, breed, weight, color, age, vet_id, petid];
+  db.query(qText, params)
+    .then(response => {
+      console.log(response);
+      return next();
+    })
+    .catch(err => next(err));
+}
+
+// ----- Update a vaccine ----- //
+petController.updateVaccine = (req, res, next) => {
+  console.log(req.body)
+  const { vaccine, date, expiration, location, pet_id, vet_id } = req.body;
+  const { vaxid } = req.params;
+
+  const qText = 'UPDATE vaccinations SET vaccine=$1, date=$2, expiration=$3, location=$4, pet_id=$5, vet_id=$6 WHERE id=$7'
+  const params = [vaccine, date, expiration, location, pet_id, vet_id, vaxid];
+  db.query(qText, params)
+    .then(response => {
+      console.log(response);
+      return next();
+    })
+    .catch(err => next(err));
+}
+
+// ----- Update an appointment ----- //
+petController.updateAppointment = (req, res, next) => {
+  console.log(req.body)
+  const { date, time, reason, location, pet_id, vet_id } = req.body;
+  const { apptid } = req.params;
+
+  const qText = 'UPDATE appointments SET date=$1, time=$2, reason=$3, location=$4, pet_id=$5, vet_id=$6 WHERE id=$7'
+  const params = [date, time, reason, location, pet_id, vet_id, apptid];
+  db.query(qText, params)
+    .then(response => {
+      console.log(response);
+      return next();
+    })
+    .catch(err => next(err));
+}
+
+// ----- Update a medication ----- //
+petController.updateMedication = (req, res, next) => {
+  console.log(req.body)
+  const { medication, dosage, instructions, reason, pet_id, vet_id } = req.body;
+  const { medid } = req.params;
+
+  const qText = 'UPDATE medications SET medication=$1, dosage=$2, instructions=$3, reason=$4, pet_id=$5, vet_id=$6 WHERE id=$7'
+  const params = [medication, dosage, instructions, reason, pet_id, vet_id, medid];
+  db.query(qText, params)
+    .then(response => {
+      console.log(response);
+      return next();
+    })
+    .catch(err => next(err));
+}
+
+// ----- update a vet ------ //
+petController.updateVet = (req, res, next) => {
+  console.log(req.body)
+  const { vet, location, phone, clinic, user_id } = req.body;
+  const { vetid } = req.params;
+  console.log('request parameters',  req.params)
+
+  const qText = 'UPDATE vets SET vet=$1, location=$2, phone=$3, clinic=$4, user_id=$5 WHERE id=$6'
+  const params = [vet, location, phone, clinic, user_id, vetid];
+  db.query(qText, params)
+    .then(response => {
+      console.log(response);
+      return next();
+    })
+    .catch(err => next(err));
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// ------------------------- Deleting Pet Info Routes ------------------------------ //
+/////////////////////////////////////////////////////////////////////////////////////////
+
 // ------ Deleting an appointment ------ //
 petController.deleteAppointment = (req, res, next) => {
   console.log('inside petController.deleteAppointment');
@@ -298,32 +388,31 @@ petController.deleteMedication = (req, res, next) => {
 // ---- Vaccinations --- //
 {
   "vaccine": "rabies",
-  "date": "10/12/22",
-  "expiration": "10/12/25",
-  "location": ?
-  "pet_id": 1,
-  "vet_id": 1
+  "date": "10/12/2012",
+  "expiration": "10/12/2015",
+  "location": "#1 vet clinic",
+  "pet_id": 2,
+  "vet_id": 2
 }
 
 // ---- Medication ----- //
 {
-  "medication": "flexinil",
-  "dosage": "5 mg",
-  "instructions": "2/day for 5 days",
-  "pet_id": 1,
-  "vet_id": 1,
-  "reason": "migraines"
+  "medication": "rexil",
+  "dosage": "8 mg",
+  "instructions": "once per day",
+  "reason": "fleas",
+  "pet_id": 2,
+  "vet_id": 2
 }
 
 // ----- Appointment ----- ///
 {
-  "date": "1/22/23",
-  "time": "1:30",
-  "location": "",
-  "vet": "",
-  "pet_id": 1, 
-  "vet_id": 1,
-  reason: "check-up"
+  "date": "01/2/2013",
+  "time": "1:45",
+  "reason": "teeth cleaning",
+  "location": "#1 vet clinic",
+  "pet_id": 2,
+  "vet_id": 2
 }
 // ----------------------------------------------- //
 */

@@ -70,6 +70,30 @@ app.post('/vax', petController.addVaccination, (req, res) => {
 })
 
 
+///////////////////////////////////////////////////////////////////////////////////////
+// ------------------------- Updating Pet Info Routes ------------------------------ //
+///////////////////////////////////////////////////////////////////////////////////////
+
+app.put('/pets/:petid', petController.updatePet, (req, res) => {
+  res.status(200).send('Pet successfully updated')
+})
+
+app.put('/meds/:medid', petController.updateMedication, (req, res) => {
+  res.status(200).send('Medication successfully updated')
+})
+
+app.put('/vax/:vaxid', petController.updateVaccine, (req, res) => {
+  res.status(200).send('Vaccination successfully updated')
+})
+
+app.put('/appts/:apptid', petController.updateAppointment, (req, res) => {
+  res.status(200).send('Appointment successfully updated')
+})
+
+app.put('/vets/:vetid', petController.updateVet, (req, res) => {
+  res.status(200).send('Vet successfully updated')
+})
+
 /////////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Retrieving Pet Info Routes ------------------------------ //
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -99,6 +123,8 @@ app.get('/vax/:petid', petController.getPetVaccinations, (req, res) => {
 app.get('/appts/:petid', petController.getPetAppointments, (req, res) => {
   res.status(200).json(res.locals.retrievedAppts);
 })
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------- Deleting Pet Documents  -------------------------------- //
