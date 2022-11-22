@@ -106,16 +106,16 @@ app.get('/appts/:petid', petController.getPetAppointments, (req, res) => {
 
 // do we need to speciiy the route to a specific appointment/medication/vaccination??
 
-app.delete('/appts/:petid', (req, res) => {
+app.delete('/appts/:apptid', petController.deleteAppointment, (req, res) => {
   res.status(200).send('Appointment removed!');
 });
 
-app.delete('/vax/:petid', (req, res) => {
+app.delete('/vax/:vaxid', (req, res) => {
   res.status(200).send('Vaccination removed!');
 });
 
 
-app.delete('/meds/:petid', (req, res) => {
+app.delete('/meds/:medid', (req, res) => {
   res.status(200).send('Medication removed!');
 });
 
