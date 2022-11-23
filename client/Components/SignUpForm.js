@@ -77,7 +77,7 @@ function SignupForm() {
             }
         })
         .then((data) => {
-            navigate('/userprofile/' + data.userId)
+            navigate('/');
         })
         .catch((rejection) => {
             console.error(rejection)

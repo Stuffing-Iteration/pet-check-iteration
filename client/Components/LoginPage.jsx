@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch} from "react-redux"
 import { loginActionCreator } from '../actionFolder/action';
@@ -75,6 +75,22 @@ const submitHandler = (e) => {
        console.log(err)}
        )
     }
+
+    useEffect(() => {
+      fetch('/api/auth/')
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else throw new Error('User is not logged in')
+      })
+      .then((data) => {
+        dispatch(actions.loginActionCreator(data.username, data.userId));
+        navigate('/pets/' + data.userId);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }, [])
 
   return(
     <div className='centered'>
