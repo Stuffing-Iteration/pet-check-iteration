@@ -17,7 +17,6 @@ function App() {
         <Route path='/pets/:userId' element={<UserProfile/>} />
         <Route path='/petprofile/:petId' element={<PetProfile/>} />
         <Route path='/*' element={<h1>Page Not Found!</h1>} />
-        
       </Routes>
     </div>
   );

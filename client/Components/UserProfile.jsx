@@ -24,11 +24,10 @@ function UserProfile(props) {
                 setPets(data)
                 return data
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(err));
         }
         fetchPets();
-        //setPets()
-    }, [])
+    }, []);
 
     
 

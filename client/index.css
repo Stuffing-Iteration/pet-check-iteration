@@ -24,6 +24,9 @@ input, button {
   background-color: gray;
 }
 
+html {
+  height: 100%;
+}
 
 body {
   /* height: 100vh; */
@@ -167,6 +170,7 @@ body {
   border: 2px solid black;
   display: flex;
   width: 75%;
+  flex-wrap: wrap;
 
 }
 

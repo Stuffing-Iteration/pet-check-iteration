@@ -183,12 +183,12 @@ app.delete('/api/appts/:apptid', petController.deleteAppointment, (req, res) => 
   res.status(200).send('Appointment removed!');
 });
 
-app.delete('/api/vax/:vaxid', (req, res) => {
+app.delete('/api/vax/:vaxid', petController.deleteVax, (req, res) => {
   res.status(200).send('Vaccination removed!');
 });
 
 
-app.delete('/api/meds/:medid', (req, res) => {
+app.delete('/api/meds/:medid', petController.deleteMedication, (req, res) => {
   res.status(200).send('Medication removed!');
 });
 
