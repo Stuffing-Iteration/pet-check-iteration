@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors');
+require('dotenv').config();
 const app = express();
 
 // middleware
@@ -11,9 +13,9 @@ const petController = require('./controllers/petController.js');
 app.use(express.static(path.resolve(__dirname, '../client')));
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(cors());
-app.use(express.static(path.resolve(__dirname, '/client')));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use((req, res, next) => {
   console.log(`${req.method} request to ${req.url}`);
   console.log('request body: ', req.body)
@@ -21,23 +23,56 @@ app.use((req, res, next) => {
   return;
 })
 
+// Serve static files
+app.use(express.static(path.resolve(__dirname, '../public')));
+
+//////////////////////////////////////////////////////////////////////////////////////
+// --------------------------- Auto Login Endpoint ------------------------------- //
+//////////////////////////////////////////////////////////////////////////////////////
+app.get('/api/auth', userController.verifyJWT, (req, res) => {
+  if (res.locals.verified) {
+    // If verified, return the app to the page without modifying their URL
+    res.status(200).json(res.locals);
+  } else {
+    res.sendStatus(500);
+  }
+})
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// ------------------------- Authorized Pages Gets ------------------------------ //
+//////////////////////////////////////////////////////////////////////////////////////
+app.get('/pets/*', userController.verifyJWT, (req, res) => {
+  if (res.locals.verified) {
+    // If verified, return the app to the page without modifying their URL
+    res.status(200).sendFile(path.resolve(__dirname, '../public/index.html'));
+  } else {
+    res.redirect('/')
+  }
+})
+
+
+app.get('/petprofile/*', userController.verifyJWT, (req, res) => {
+  if (res.locals.verified) {
+    // If verified, return the app to the page without modifying their URL
+    res.status(200).sendFile(path.resolve(__dirname, '../public/index.html'));
+  } else {
+    res.redirect('/')
+  }
+})
 
 //////////////////////////////////////////////////////////////////////////////////////
 // ------------------------------ User Routes ------------------------------------ //
 //////////////////////////////////////////////////////////////////////////////////////
 
 // Adding new users to the DB
-app.post('/api/users', userController.createUser, (req, res) => {
-  res.status(200).json({ userId: res.locals.userId});
+app.post('/api/users', userController.createUser, userController.createJWT, (req, res) => {
+  res.status(200).json(res.locals);
 })
 
 // Signing in existing users
-app.post('/api/login', userController.verifyUser, (req, res) => {
-  const response = {
-    user: res.locals.user,
-    found: res.locals.found
-  }
-  res.status(200).json(response);
+app.post('/api/login', userController.verifyUser, userController.createJWT, (req, res) => {
+  res.status(200).json(res.locals);
 })
 
 
@@ -161,13 +196,19 @@ app.delete('/api/meds/:medid', (req, res) => {
 // -------------------------- Global Routes/Handlers -------------------------------- //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-// ERROR HANDLERS:
-// local
-app.use('*', (req, res) => {
+// Send unrecognized get requests to index.html and let front end display appropriately
+app.get('/*', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../public/index.html'));
+  return;
+})
+
+// Send return 404 for all unrecognized non-get requests
+app.use('/*', (req, res) => {
   console.log('Default route handler for:\n' + `${req.method} request to ${req.url}`)
   res.status(404).send('404: Not Found');
 });
-// global 
+
+// Global Error Handler
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).send({ error: err });
