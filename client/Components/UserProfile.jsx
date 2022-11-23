@@ -24,22 +24,23 @@ function UserProfile(props) {
                 setPets(data)
                 return data
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(err));
         }
         fetchPets();
-        //setPets()
-    }, [])
+    }, []);
 
     
 
     return (
-        <div>
+        <div className='profileContainer'>
             <h1>{props.username}'s Profile</h1>
-            {
-                petInfo.map(pet => {
-                    return <PetCard petInfo={pet}/>
-                })
-            }
+            <div className='petCardContainer'>
+                {
+                    petInfo.map(pet => {
+                        return <PetCard petInfo={pet}/>
+                    })
+                }
+            </div>
         </div>
         
     )

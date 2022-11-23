@@ -8,13 +8,14 @@ import {
   YAxis,
   Tooltip,
 } from 'recharts';
+
 const data = [
-  { name: 'June 2022', weight: 34 },
-  { name: 'July 2022', weight: 32 },
-  { name: 'Aug 2022', weight: 29 },
-  { name: 'Sept 2022', weight: 27 },
-  { name: 'Oct 2022', weight: 31 },
-  { name: 'Nov 2022', weight: 30 },
+  { name: 'June 2022', weight: 34, avg: 30, amt: 50 },
+  { name: 'July 2022', weight: 32, avg: 30, amt: 50  },
+  { name: 'Aug 2022', weight: 29, avg: 30, amt: 50  },
+  { name: 'Sept 2022', weight: 27, avg: 30, amt: 50  },
+  { name: 'Oct 2022', weight: 31, avg: 30, amt: 50  },
+  { name: 'Nov 2022', weight: 30, avg: 30, amt: 50  },
 ];
 
 const WeightChart = () => {

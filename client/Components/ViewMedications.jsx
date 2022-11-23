@@ -19,41 +19,52 @@ const columns = [
   },
 ];
 
-// const rows = [
-//   { id: 1, medication: 'Flea pill', dosage: '', instruction: '', reason: '' },
-//   { id: 2, medication: '', dosage: '', instruction: '', reason: '' },
-//   { id: 3, medication: '', dosage: '', instruction: '', reason: '' },
-//   {
-//     id: 4,
-//     medication: '',
-//     dosage: '',
-//     instruction: '',
-//     reason: '',
-//   },
-//   { id: 5, medication: '', dosage: '', instruction: '', reason: '' },
-// ];
+export default function ViewMedications({meds, petId}) {
 
-export default function ViewMedications(props) {
-  const { medication, dosage, instructions, reason } = props.medication;
-  console.log('medication info: ', props.medication);
-  const rows = [
-    {
-      id: 1,
-      medication: medication,
-      dosage: dosage,
-      instructions: instructions,
-      reason: reason,
-    },
-  ];
+  const [rows, setRows] = React.useState([]);
+
+  const createRows = (data) => {
+    if(data) {
+      const newRows = data.map(med => {
+        const { id, medication, dosage, instructions, reason, pet_id, vet_id } = med;
+
+        return {
+          id: id, 
+          medication: medication,
+          dosage: dosage,
+          instructions: instructions,
+          reason: reason,
+          pet_id: pet_id,
+          vet_id: vet_id
+        }
+      })
+      setRows(newRows)
+      }
+    };
+  
+  const fetchData = () => {
+    fetch(`/api/meds/${petId}`)
+      .then(response => response.json())
+      .then(data => {
+        createRows(data);
+      })
+  };
 
   const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = () => {
+    fetchData();
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleDelete = () => {
+    return;
+  }
+
   return (
     <div>
       <Button className='addNote' variant='outlined' onClick={handleClickOpen}>
@@ -78,6 +89,7 @@ export default function ViewMedications(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleDelete}>Delete Selected</Button>
           {/* <Button onClick={handleClick}>Submit</Button> */}
         </DialogActions>
       </Dialog>

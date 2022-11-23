@@ -10,16 +10,15 @@ import PetProfile from './Components/PetProfile';
 function App() {
 
   return (
-    <>
+    <div>
       <Routes>
         <Route path='/' element={<LoginPage/>} />
         <Route path='/signup' element={<SignUpPage/>} />
         <Route path='/pets/:userId' element={<UserProfile/>} />
         <Route path='/petprofile/:petId' element={<PetProfile/>} />
         <Route path='/*' element={<h1>Page Not Found!</h1>} />
-        
       </Routes>
-    </>
+    </div>
   );
 }
 

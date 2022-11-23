@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Patrick+Hand&family=Secular+One&family=Signika+Negative&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: montserrat, sans-serif;
+  font-family: 'Courier New', Courier, monospace;
+  border-radius: .5rem;
 }
 /* 
 input, button {
@@ -14,14 +17,19 @@ input, button {
 } */
 
 .App {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: gray;
 }
+
+html {
+  height: 100%;
+}
+
 body {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,8 +147,57 @@ body {
   color: #fe4888;
   font-weight: 700;
 }
-#centered{
+
+/* #centered{
   display: flex;
   width: 100%;
   height:100vh;
+} */
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.profileContainer > * {
+  margin: 2rem;
+}
+
+.petCardContainer {
+  border: 2px solid black;
+  display: flex;
+  width: 75%;
+  flex-wrap: wrap;
+
+}
+
+.petCardImg {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+}
+
+.petCard {
+  font-family: 'Patrick Hand';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  border: 2px solid black;
+  width: 40%;
+  max-height: 50%;
+  min-height: 50%;
+
+  margin: 2rem;
+}
+
+.petCard:hover {
+  background-color:#f1638e;
+  cursor: pointer;
+  transform: scale(1.1);
+  border: 5px solid black;
 }
