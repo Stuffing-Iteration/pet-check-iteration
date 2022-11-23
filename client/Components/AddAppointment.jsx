@@ -9,14 +9,6 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
 
-// const appt = {
-//   date: '1/22/23',
-//   time: '1:30',
-//   location: '',
-//   vet: '',
-//   reason: 'check-up',
-// };
-
 const AddAppointment = ({petId}) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -49,13 +41,13 @@ const AddAppointment = ({petId}) => {
   };
 
   const handleClickOpen = () => {
-  
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+  
   return (
     <div>
       <Button className='addNote' variant='outlined' onClick={handleClickOpen}>

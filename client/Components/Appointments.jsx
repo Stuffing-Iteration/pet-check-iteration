@@ -8,7 +8,7 @@ const Appointments = ({ appts, petId }) => {
       <div className='appt-info'>
         <div className='appt-info-header'>Appointments</div>
         <div className='appt-info-box'>
-          <ViewAppointments appts={appts} />
+          <ViewAppointments appts={appts} petId={petId} />
           <AddAppointment petId={petId} />
         </div>
       </div>
