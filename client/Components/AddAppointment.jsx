@@ -17,7 +17,7 @@ import axios from 'axios';
 //   reason: 'check-up',
 // };
 
-const AddAppointment = () => {
+const AddAppointment = ({petId}) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
@@ -25,34 +25,31 @@ const AddAppointment = () => {
   const [reason, setReason] = useState('');
   const [open, setOpen] = React.useState(false);
 
+  console.log('pet id inside of addAppointment', petId);
+
   const handleClick = () => {
+    
     fetch('/api/appts', {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         date: date,
         time: time,
         location: location,
-        vet: vet,
+        vet_id: vet,
         reason: reason,
-      },
-    }).then((response) => console.log(response));
-    // useEffect(() => {
-    //   axios
-    //     .post('http://localhost:3000/appts', {
-    //       date: date,
-    //       time: time,
-    //       location: location,
-    //       vet: vet,
-    //       reason: reason,
-    //     })
-    //     .then((res) => {
-    //       console.log('posted: ', res);
-    //     })
-    //     .catch((err) => console.log(err));
-    // });
+        pet_id: petId 
+      }),
+    }).then(res => {
+      alert('Appointment added!')
+    }).catch(err => alert(err));
+    handleClose();
   };
 
   const handleClickOpen = () => {
+  
     setOpen(true);
   };
 
@@ -96,7 +93,7 @@ const AddAppointment = () => {
               />
             </FormControl>
             <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='Vet'>Vet Name</InputLabel>
+              <InputLabel htmlFor='Vet'>Vet</InputLabel>
               <OutlinedInput
                 autoComplete='off'
                 id='Vet'

@@ -1,4 +1,3 @@
-const path = require('path');
 const db = require('../db.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');

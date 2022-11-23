@@ -18,12 +18,14 @@ app.use(cors());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use((req, res, next) => {
   console.log(`${req.method} request to ${req.url}`);
+  console.log('request body: ', req.body)
   next();
   return;
 })
 
 // Serve static files
 app.use(express.static(path.resolve(__dirname, '../public')));
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 // --------------------------- Auto Login Endpoint ------------------------------- //
@@ -38,9 +40,9 @@ app.get('/api/auth', userController.verifyJWT, (req, res) => {
 })
 
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Authorized Pages Gets ------------------------------ //
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 app.get('/pets/*', userController.verifyJWT, (req, res) => {
   if (res.locals.verified) {
     // If verified, return the app to the page without modifying their URL
@@ -104,6 +106,34 @@ app.post('/api/vax', petController.addVaccination, (req, res) => {
   res.status(200).send('New vaccination added!')
 })
 
+//Add a new weight
+app.post('/api/weights', petController.addWeights, (req, res) => {
+  res.status(200).send('New weight added!')
+})
+
+///////////////////////////////////////////////////////////////////////////////////////
+// ------------------------- Updating Pet Info Routes ------------------------------ //
+///////////////////////////////////////////////////////////////////////////////////////
+
+app.put('/pets/:petid', petController.updatePet, (req, res) => {
+  res.status(200).send('Pet successfully updated')
+})
+
+app.put('/meds/:medid', petController.updateMedication, (req, res) => {
+  res.status(200).send('Medication successfully updated')
+})
+
+app.put('/vax/:vaxid', petController.updateVaccine, (req, res) => {
+  res.status(200).send('Vaccination successfully updated')
+})
+
+app.put('/appts/:apptid', petController.updateAppointment, (req, res) => {
+  res.status(200).send('Appointment successfully updated')
+})
+
+app.put('/vets/:vetid', petController.updateVet, (req, res) => {
+  res.status(200).send('Vet successfully updated')
+})
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Retrieving Pet Info Routes ------------------------------ //
@@ -112,7 +142,13 @@ app.post('/api/vax', petController.addVaccination, (req, res) => {
 // ---- Get all of a users pets --- //
 app.get('/api/pets/:userid', petController.getUserPets, (req, res) => {
   res.status(200).json(res.locals.retrievedPets);
-})
+});
+
+
+app.get('/api/onepet/:petid', petController.getOnePet, (req, res) => {
+  res.status(200).json(res.locals.retrievedPet);
+});
+
 
 // ----- Get all of a users veterinarians -----//
 app.get('/api/vets/:userid', petController.getUserVets, (req, res) => {
@@ -134,6 +170,8 @@ app.get('/api/vax/:petid', petController.getPetVaccinations, (req, res) => {
 app.get('/api/appts/:petid', petController.getPetAppointments, (req, res) => {
   res.status(200).json(res.locals.retrievedAppts);
 })
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------- Deleting Pet Documents  -------------------------------- //

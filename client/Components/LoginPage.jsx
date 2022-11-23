@@ -9,35 +9,15 @@ function Login() {
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const dispatch = useDispatch();
-//   const adminUser = {
-//     email: 'admin@admin.com',
-//     password: 'abc',
-//   };
+
 /*
-
-  const [user, setUser] = useState({ name: '', email: '' });
-
-  
-
-  const Login = (details) => {
-    if (
-      details.email == adminUser.email &&
-      details.password == adminUser.password
-    ) {
-      setUser({
-        name: details.name,
-        email: details.email,
-      });
-    } else {
-      setError('details dont matcadm');
-    }
-  };
-
   const LogOut = () => {
     setUser({ name: '', email: '' });
   };*/
+
 //turn pet profile in link
 const [details, setDetails] = useState({ name: '', password: '' });
+
 const submitHandler = (e) => {
     e.preventDefault();
         fetch('api/login', {
