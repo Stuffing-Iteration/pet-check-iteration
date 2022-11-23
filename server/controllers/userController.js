@@ -76,19 +76,26 @@ userController.createJWT = (req, res, next) => {
 
 userController.verifyJWT = (req, res, next) => {
   const token = req.signedCookies.token;
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
-    if (err) {
-      console.error(err)
-      res.locals.verified = false
-     } else {
-      res.locals.verified = true;
-      res.locals.username = data.username;
-      res.locals.userId = data.userId;
-      res.locals.email = data.email;
-    };
+  if (token) {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+      if (err) {
+        console.error(err)
+        res.locals.verified = false
+       } else {
+        res.locals.verified = true;
+        res.locals.username = data.username;
+        res.locals.userId = data.userId;
+        res.locals.email = data.email;
+      };
+      next();
+      return;
+    });
+  } else {
+    res.locals.verified = false;
     next();
     return;
-  });
+  }
+
 }
 
 

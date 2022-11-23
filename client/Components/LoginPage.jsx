@@ -78,13 +78,17 @@ const submitHandler = (e) => {
 
     useEffect(() => {
       fetch('/api/auth/')
-      .then((response) => { if (response.status === 200) return response.json() })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else throw new Error('User is not logged in')
+      })
       .then((data) => {
         dispatch(actions.loginActionCreator(data.username, data.userId));
         navigate('/pets/' + data.userId);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       })
     }, [])
 
