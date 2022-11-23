@@ -11,10 +11,7 @@ import FormControl from '@mui/material/FormControl';
 // import { useForm } from 'react-hook-form';
 
 const AddVaccine = ({petId}) => {
-  // "vaccine": "rabies",
-  // "date": "10/12/22",
-  // "expiration": "10/12/25",
-  // "location": ?
+
   const [vaccine, setVaccine] = useState('');
   const [date, setDate] = useState('');
   const [exp, setExp] = useState('');
@@ -37,29 +34,11 @@ const AddVaccine = ({petId}) => {
         pet_id: petId,
         vet_id: 2,
       }),
-    });
-
-    /*
-    {
-  "vaccine": "rabies",
-  "date": "10/12/22",
-  "expiration": "10/12/25",
-  "location": ?
-  "pet_id": 1,
-  "vet_id": 1
-}
-    */
-    // const { vaccine, date, expiration, location, pet_id, vet_id } = req.body;
-    // const data = {
-    //   vaccine,
-    //   date,
-    //   expiration,
-    //   location,
-    // };
-    // const card = await axios.post('http://localhost:8080/cards/add', data);
-    // const newCards = [...cards, card.data];
-    // setCards(newCards);
-    // setOpen(false);
+    }).then(res => {
+      alert('Vaccination added!')
+    }).catch(err => alert(err));
+    
+    handleClose();
   };
 
   const handleClickOpen = () => {

@@ -35,26 +35,24 @@ const columns = [
 //   { id: 6, date: '', time: '', location: '', vet: '', reason: '' },
 // ];
 
-export default function ViewAppointments({ appts }) {
-  const { date, time, location, vet, reason } = appts;
+export default function ViewAppointments({ appts, petId }) {
 
-  // let rows;
-  // if (appts) {
-  //   rows = appts.map(appointment => {
-  //     const {  }
-  //   })
-  // }
+  let rows;
+  if (appts) {
+    rows = appts.map(appointment => {
+      const { id, date, time, reason, location } = appointment;
 
-  const rows = [
-    {
-      id: 1,
-      date: date,
-      time: time,
-      location: location,
-      vet: vet,
-      reason: reason,
-    },
-  ];
+      return {
+        id: id, 
+        date: date,
+        time: time,
+        reason: reason,
+        location: location,
+        pet_id: petId,
+        vet_id: 2
+      }
+    })
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {

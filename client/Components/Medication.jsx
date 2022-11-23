@@ -2,13 +2,13 @@ import React from 'react';
 import AddMedication from './AddMedication';
 import ViewMedications from './ViewMedications';
 
-const Medication = ({ med, petId }) => {
+const Medication = ({ meds, petId }) => {
   return (
     <>
       <div className='med-info'>
         <div className='med-info-header'>Medication & Treatment</div>
         <div className='med-info-box'>
-          <ViewMedications medication={med} />
+          <ViewMedications meds={meds} />
           <AddMedication petId={petId}/>
         </div>
       </div>

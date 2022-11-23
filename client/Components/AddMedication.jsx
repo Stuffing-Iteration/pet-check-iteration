@@ -16,10 +16,10 @@ import FormControl from '@mui/material/FormControl';
 //   reason: 'check-up',
 // };
 
-const AddMedication = () => {
+const AddMedication = ({petId}) => {
   const [medication, setMedication] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [dosage, setDosage] = useState('');
+  const [instructions, setInstructions] = useState('');
   const [location, setLocation] = useState('');
   const [vet, setVet] = useState('');
   const [reason, setReason] = useState('');
@@ -36,8 +36,13 @@ const AddMedication = () => {
         dosage: dosage,
         instructions: instructions,
         reason: reason,
+        pet_id: petId,
+        vet_id: 2
       }),
-    });
+    }).then(res => {
+      alert('Medication added!')
+    }).catch(err => alert(err));;
+    handleClose();
   };
 
   const handleClickOpen = () => {
@@ -57,48 +62,48 @@ const AddMedication = () => {
         <DialogContent>
           <form className='add-appt-form'>
             <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='date'>Date</InputLabel>
+              <InputLabel htmlFor='medication'>Medication</InputLabel>
               <OutlinedInput
                 autoComplete='off'
-                id='date'
-                onChange={(e) => setDate(e.target.value)}
-                label='date'
+                id='medications'
+                onChange={(e) => setMedication(e.target.value)}
+                label='medication'
               />
             </FormControl>
             <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='time'>Time</InputLabel>
+              <InputLabel htmlFor='dosage'>Dosage</InputLabel>
               <OutlinedInput
                 autoComplete='off'
-                id='time'
-                onChange={(e) => setTime(e.target.value)}
-                label='time'
+                id='dosage'
+                onChange={(e) => setDosage(e.target.value)}
+                label='dosage'
               />
             </FormControl>
             <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='Location'>Location</InputLabel>
+              <InputLabel htmlFor='Instructions'>Instructions</InputLabel>
               <OutlinedInput
                 autoComplete='off'
-                id='Location'
-                onChange={(e) => setLocation(e.target.value)}
-                label='Location'
+                id='Instructions'
+                onChange={(e) => setInstructions(e.target.value)}
+                label='Instructions'
               />
             </FormControl>
             <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='Vet'>Vet Name</InputLabel>
-              <OutlinedInput
-                autoComplete='off'
-                id='Vet'
-                onChange={(e) => setVet(e.target.value)}
-                label='Vet'
-              />
-            </FormControl>
-            <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='Reason'>Reason for Medication</InputLabel>
+              <InputLabel htmlFor='Reason'>Reason</InputLabel>
               <OutlinedInput
                 autoComplete='off'
                 id='Reason'
                 onChange={(e) => setReason(e.target.value)}
                 label='Reason'
+              />
+            </FormControl>
+            <FormControl sx={{ m: 1, width: '25ch' }}>
+              <InputLabel htmlFor='Vet'>Vet</InputLabel>
+              <OutlinedInput
+                autoComplete='off'
+                id='Vet'
+                onChange={(e) => setVet(e.target.value)}
+                label='Vet'
               />
             </FormControl>
           </form>

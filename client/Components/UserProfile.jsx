@@ -33,13 +33,15 @@ function UserProfile(props) {
     
 
     return (
-        <div>
+        <div className='profileContainer'>
             <h1>{props.username}'s Profile</h1>
-            {
-                petInfo.map(pet => {
-                    return <PetCard petInfo={pet}/>
-                })
-            }
+            <div className='petCardContainer'>
+                {
+                    petInfo.map(pet => {
+                        return <PetCard petInfo={pet}/>
+                    })
+                }
+            </div>
         </div>
         
     )

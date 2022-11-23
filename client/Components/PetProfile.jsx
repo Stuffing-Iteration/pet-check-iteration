@@ -82,24 +82,14 @@ const PetProfile = () => {
   };
 
   const getVaccine = () => {
-    // const data = await axios.get('https://localhost:3000/vax/1');
     fetch(`/api/vax/${petId}`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log('data from fetch', data);
+        console.log('data from vax fetch', data);
         setVaccine(data);
-        // setVaccine({
-        //   vaccine: data[0].vaccine,
-        //   date: data[0].date,
-        //   expiration: data[0].expiration,
-        //   location: data[0].location,
-        //   pet_id: data[0].pet_id,
-        //   vet_id: data[0].vet_id,
-        // });
         console.log('vaccine info', vaccines);
-        // setVaccine(data);
       })
       .catch((err) => console.log(err));
   };
@@ -110,37 +100,21 @@ const PetProfile = () => {
         return response.json();
       })
       .then((data) => {
-        console.log('data from fetch', data);
-        setAppt({
-          date: data[0].date,
-          time: data[0].time,
-          location: data[0].location,
-          vet: data[0].vet,
-          reason: data[0].reason,
-        });
-        console.log('appointment info', appts);
+        console.log('data from appts fetch', data);
+        setAppt(data);
       })
       .catch((err) => console.log(err));
-    // setAppt(data);
   };
   
   const getMed = () => {
-    // const data = await axios.get('https://localhost:3000/meds/1');
-    // setMedication(data);
     fetch(`/api/meds/${petId}`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log('data from fetch', data);
-        setMedication({
-          medication: data[0].medication,
-          dosage: data[0].dosage,
-          instructions: data[0].instructions,
-          reason: data[0].reason,
-        });
+        console.log('data from meds fetch', data);
+        setMedication(data);
         console.log('medication info', medications);
-        // setVaccine(data);
       })
       .catch((err) => console.log(err));
   };
@@ -169,8 +143,8 @@ const PetProfile = () => {
       <div className='profile-container'>
         <PetInfo info={petInfo} petId={petId}/>
         <VaccineRecord vaccineInfo={vaccines} petId={petId}/>
-        <Appointments appt={appts} petId={petId}/>
-        <Medication med={medications} petId={petId}/>
+        <Appointments appts={appts} petId={petId}/>
+        <Medication meds={medications} petId={petId}/>
         <Weight />
       </div>
     </>

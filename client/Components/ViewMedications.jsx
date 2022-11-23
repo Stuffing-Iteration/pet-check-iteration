@@ -33,18 +33,25 @@ const columns = [
 //   { id: 5, medication: '', dosage: '', instruction: '', reason: '' },
 // ];
 
-export default function ViewMedications(props) {
-  const { medication, dosage, instructions, reason } = props.medication;
-  console.log('medication info: ', props.medication);
-  const rows = [
-    {
-      id: 1,
-      medication: medication,
-      dosage: dosage,
-      instructions: instructions,
-      reason: reason,
-    },
-  ];
+export default function ViewMedications({meds}) {
+  
+  console.log('medication info: ', meds);
+  let rows;
+  if(meds) {
+    rows = meds.map(med => {
+      const { id, medication, dosage, instructions, reason, pet_id, vet_id } = med;
+
+      return {
+        id: id, 
+        medication: medication,
+        dosage: dosage,
+        instructions: instructions,
+        reason: reason,
+        pet_id: pet_id,
+        vet_id: vet_id
+      }
+    })
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
