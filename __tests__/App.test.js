@@ -21,9 +21,9 @@ afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 // Application Front Page Testing
-test('Full App Rendering', async function() {
+test('Page App Rendering', async function() {
   render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={['/']}>
       <Provider store={store}>
         <App />
       </Provider>
