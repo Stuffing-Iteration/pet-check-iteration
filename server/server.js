@@ -26,16 +26,30 @@ app.use((req, res, next) => {
 app.use(express.static(path.resolve(__dirname, '../public')));
 
 //////////////////////////////////////////////////////////////////////////////////////
-// ------------------------------ Auth Routes ------------------------------------ //
+// --------------------------- Auto Login Endpoint ------------------------------- //
 //////////////////////////////////////////////////////////////////////////////////////
-app.get('/login', userController.verifyJWT, (req, res) => {
+app.get('/api/login', userController.verifyJWT, (req, res) => {
   if (res.locals.verified) {
     // If verified, return the app to the page without modifying their URL
-    res.redirect('/userprofile/' + res.locals.userId);
+    res.status(200).json({redirectURL: '/pets/' + res.locals.userId});
+  } else {
+    res.status(500).json({redirectURL: '/'});
+  }
+})
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// ------------------------- Authorized Pages Gets ------------------------------ //
+//////////////////////////////////////////////////////////////////////////////////////
+app.get('/pets/*', userController.verifyJWT, (req, res) => {
+  if (res.locals.verified) {
+    // If verified, return the app to the page without modifying their URL
+    res.status(200).sendFile(path.resolve(__dirname, '../public/index.html'));
   } else {
     res.redirect('/')
   }
 })
+
 
 app.get('/petprofile/*', userController.verifyJWT, (req, res) => {
   if (res.locals.verified) {
@@ -45,16 +59,6 @@ app.get('/petprofile/*', userController.verifyJWT, (req, res) => {
     res.redirect('/')
   }
 })
-
-app.get('/userprofile/*', userController.verifyJWT, (req, res) => {
-  if (res.locals.verified) {
-    // If verified, return the app to the page without modifying their URL
-    res.status(200).sendFile(path.resolve(__dirname, '../public/index.html'));
-  } else {
-    res.redirect('/')
-  }
-})
-
 
 //////////////////////////////////////////////////////////////////////////////////////
 // ------------------------------ User Routes ------------------------------------ //

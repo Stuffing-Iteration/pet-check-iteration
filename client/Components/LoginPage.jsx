@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch} from "react-redux"
 import { loginActionCreator } from '../actionFolder/action';
@@ -75,6 +75,17 @@ const submitHandler = (e) => {
        console.log(err)}
        )
     }
+
+    useEffect(() => {
+      fetch('/api/login/')
+      .then((response) => response.json())
+      .then((data) => {
+        navigate(data.redirectURL);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+    }, [])
 
   return(
     <div className='centered'>
