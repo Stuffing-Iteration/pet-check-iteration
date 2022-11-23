@@ -14,25 +14,26 @@ const mapStateToProps = state => (
 function UserProfile(props) {
     const [petInfo, setPets] = useState([])
     console.log(props)
+    const fetchPets = async () =>{
+        fetch(`api/pets/${props.userId}`)
+        .then((data) => {
+            return data.json();
+        })
+        .then((data) => {
+            setPets(data)
+            return data
+        })
+        .catch((err) => console.log(err))
+    }
     useEffect(() => {
-        const fetchPets = async () =>{
-            fetch(`api/pets/${props.userId}`)
-            .then((data) => {
-                return data.json();
-            })
-            .then((data) => {
-                setPets(data)
-                return data
-            })
-            .catch((err) => console.log(err))
-        }
+       
         fetchPets();
         //setPets()
     }, [])
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if(details.name && details.species && details.breed){
+        if(petDetails.name && petDetails.species && petDetails.breed){
         fetch('api/pets', {
             headers: {
               'Accept': 'application/json',
@@ -40,12 +41,12 @@ function UserProfile(props) {
             },
             method: "POST",
             body: JSON.stringify({
-                name: details.name,
-                species: details.species.replace(' ', '-'),
-                breed: details.breed,
-                weight: details.weight,
-                color: details.color,
-                age: details.age,
+                name: petDetails.name,
+                species: petDetails.species,
+                breed: petDetails.breed,
+                weight: petDetails.weight,
+                color: petDetails.color,
+                age: petDetails.age,
                 owner_id: props.userId,
                 vet_id: 2
               })})
@@ -55,6 +56,9 @@ function UserProfile(props) {
             else{
                 throw new Error("data status was not 200")
             }})
+        .then(
+            fetchPets()
+        )
       }
     else{
         alert('You must enter Name, Species, and Breed')
@@ -73,79 +77,73 @@ function UserProfile(props) {
         <h2>Add New Pet!</h2>
         <div className="formContainer">
         {error != ' ' ? <div className='error'></div> : ''}
-        <div className='form-group'>
-          <label htmlFor='name'>Name:</label>
+        <div className='form-group pform'>
+          <label htmlFor='name'>*Name:</label>
           <input
             autoComplete='off'
             type='text'
-            name='name'
-            id='name'
+            className='inputPet'
             onChange={(e) => setPetDetails({ ...petDetails, name: e.target.value })}
             value={petDetails.name}
           />
         </div>
-        <div className='form-group'>
-          <label htmlFor='password'>Species:</label>
-          <input
-            autoComplete='off'
-            type='password'
-            name='password'
-            id='password'
-            onChange={(e) =>
-              setPetDetails({ ...petDetails, species: e.target.value })
-            }
-            value={petDetails.password}
-          />
-          </div>
-          <div className='form-group'>
-          <label htmlFor='name'>Breed:</label>
+        <div className='form-group pform'>
+          <label htmlFor='Species'>*Species:</label>
           <input
             autoComplete='off'
             type='text'
-            name='name'
-            id='name'
-            onChange={(e) => setPetDetails({ ...petDetails, breed: e.target.value })}
-            value={petDetails.name}
+            className='inputPet'
+            onChange={(e) =>
+              setPetDetails({ ...petDetails, species: e.target.value })
+            }
+            value={petDetails.species}
+          />
+          </div>
+          <div className='form-group pform'>
+          <label htmlFor='Breed'>*Breed:</label>
+          <input
+            autoComplete='off'
+            type='text'
+            className='inputPet'
+            onChange={(e) => setPetDetails({ ...petDetails, breed: e.target.value.replace(' ', '') })}
+            
           />
         </div>
         </div>
         <div className='formContainer'>
-        <div className='form-group'>
-          <label htmlFor='name'>Weight:</label>
+        <div className='form-group pform'>
+          <label htmlFor='Weight'>Weight:</label>
           <input
             autoComplete='off'
             type='text'
-            name='name'
-            id='name'
+            className='inputPet'
             onChange={(e) => setPetDetails({ ...petDetails, weight: e.target.value })}
-            value={petDetails.name}
+            value={petDetails.weight}
           />
         </div>
-        <div className='form-group'>
-          <label htmlFor='name'>Color:</label>
+        <div className='form-group pform'>
+          <label htmlFor='Color'>Color:</label>
           <input
             autoComplete='off'
             type='text'
-            name='name'
-            id='name'
+            className='inputPet'
             onChange={(e) => setPetDetails({ ...petDetails, color: e.target.value })}
-            value={petDetails.name}
+            value={petDetails.color}
           />
         </div>
-        <div className='form-group'>
-          <label htmlFor='name'>Age:</label>
+        <div className='form-group pform'>
+          <label htmlFor='Age'>Age:</label>
           <input
             autoComplete='off'
             type='text'
-            name='name'
-            id='name'
+            className='inputPet'
             onChange={(e) => setPetDetails({ ...petDetails, age: e.target.value })}
-            value={petDetails.name}
+            value={petDetails.age}
           />
-        </div>
         </div>
         <div>
           <input id="submitPet" type='submit' value='SUBMIT' />
+        </div>
         </div>
         </div>
     </form>
