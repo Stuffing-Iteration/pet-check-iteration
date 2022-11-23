@@ -123,7 +123,7 @@ const PetProfile = () => {
       .catch((err) => console.log(err));
     // setAppt(data);
   };
-  
+
   const getMed = () => {
     // const data = await axios.get('https://localhost:3000/meds/1');
     // setMedication(data);

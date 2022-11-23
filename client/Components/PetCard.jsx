@@ -29,7 +29,7 @@ getPetImage(breed)
 return(
     <div className="petCard" onClick={goToPet}>
         <img className="petCardImg" src={petImg}/>
-        <h2>{name}</h2>
+        <h2 className="nameOnCard">{name}</h2>
         <p></p>
     </div>
 )

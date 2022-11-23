@@ -1,0 +1,52 @@
+@import '_colorSchema';
+*{
+    outline: 2px;
+    outline-color: red;
+}
+#container{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+#greeting{
+    color: whitesmoke;
+    font-size: 3.7vh;
+    margin-bottom: 15vh;
+}
+.petCard {
+    position: relative;
+    width : 20vw;
+    height: 18vh;
+    border-radius: 1.7rem;
+    border: 1px solid gainsboro;
+    background: linear-gradient(
+    45deg,
+    $pinkLighter,
+    white,
+    white 
+  );
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+.petCardImg {
+    position: absolute;
+    top: 2;
+    left:2vw;
+    width: 13vw;
+    height: 13vh;
+    border-radius: 30%;
+}
+.nameOnCard {
+    position: absolute;
+    bottom: 0;
+    left:2vw;
+}
+#cardContainer {
+    display: flex;
+    flex-direction: row;
+}
+.pet-form {
+    display: flex;
+    flex-direction: row;
+}

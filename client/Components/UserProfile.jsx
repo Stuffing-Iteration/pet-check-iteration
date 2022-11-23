@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {connect} from 'react-redux'
 import PetCard from './PetCard';
-
+import './scssStyles/petCard.scss';
 
 const mapStateToProps = state => (
     {
@@ -33,13 +33,15 @@ function UserProfile(props) {
     
 
     return (
-        <div>
-            <h1>{props.username}'s Profile</h1>
+        <div id="container">
+            <p id="greeting">{props.username}'s Profile</p>
+            <div id="cardContainer">
             {
                 petInfo.map(pet => {
                     return <PetCard petInfo={pet}/>
                 })
             }
+            </div>
         </div>
         
     )
