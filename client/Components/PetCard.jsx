@@ -3,27 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { useState} from 'react'
 
 function PetCard (props){
-const [petImg, setPetImg] =  useState(' ')
-const { name, id, breed, species } = props.petInfo;
-console.log('pet card props: ', props)  
-const navigate = useNavigate()
-const goToPet = (e) => {
-  
-  navigate(`/petprofile/${id}`)
-  
-}
-useEffect(() => {
-const getPetImage = (breed) => {
-fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
-.then((data) =>  data.json())
-.then((data) => {
-    console.log(data.message)
-    setPetImg(data.message)
-})
-.catch(err => console.log(err))
-}
-getPetImage(breed)
-}, [])
+
+    const [petImg, setPetImg] =  useState(' ')
+    const { name, id, breed, species } = props.petInfo;
+    console.log('pet card props: ', props)  
+    const navigate = useNavigate()
+    const goToPet = (e) => {
+    
+      navigate(`/petprofile/${id}`)
+    }
+
+    useEffect(() => {
+        const getPetImage = (breed) => {
+        fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
+        .then((data) =>  data.json())
+        .then((data) => {
+            console.log(data.message)
+            setPetImg(data.message)
+        })
+        .catch(err => console.log(err))
+        }
+    getPetImage(breed)
+    }, [])
 
 
 return(

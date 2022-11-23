@@ -10,11 +10,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 // import { useForm } from 'react-hook-form';
 
-const AddVaccine = () => {
-  // "vaccine": "rabies",
-  // "date": "10/12/22",
-  // "expiration": "10/12/25",
-  // "location": ?
+const AddVaccine = ({petId}) => {
+
   const [vaccine, setVaccine] = useState('');
   const [date, setDate] = useState('');
   const [exp, setExp] = useState('');
@@ -22,40 +19,26 @@ const AddVaccine = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClick = async () => {
-    await fetch('/api/vax', {
+  const handleClick = () => {
+    console.log('vax info ', vaccine, date, exp, location)
+    fetch('/api/vax', {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         vaccine: vaccine,
         date: date,
-        expiration: expiration,
+        expiration: exp,
         location: location,
-        pet_id: 1,
-        vet_id: 1,
-      },
-    });
-
-    /*
-    {
-  "vaccine": "rabies",
-  "date": "10/12/22",
-  "expiration": "10/12/25",
-  "location": ?
-  "pet_id": 1,
-  "vet_id": 1
-}
-    */
-    // const { vaccine, date, expiration, location, pet_id, vet_id } = req.body;
-    // const data = {
-    //   vaccine,
-    //   date,
-    //   expiration,
-    //   location,
-    // };
-    // const card = await axios.post('http://localhost:8080/cards/add', data);
-    // const newCards = [...cards, card.data];
-    // setCards(newCards);
-    // setOpen(false);
+        pet_id: petId,
+        vet_id: 2,
+      }),
+    }).then(res => {
+      alert('Vaccination added!')
+    }).catch(err => alert(err));
+    
+    handleClose();
   };
 
   const handleClickOpen = () => {
@@ -79,7 +62,10 @@ const AddVaccine = () => {
               <OutlinedInput
                 autoComplete='off'
                 id='vaccineName'
-                onChange={(e) => setVaccine(e.target.value)}
+                onChange={(e) => {
+                  setVaccine(e.target.value);
+                  console.log('updated vax: ', vaccine)
+                }}
                 label='Vaccine Name'
               />
             </FormControl>

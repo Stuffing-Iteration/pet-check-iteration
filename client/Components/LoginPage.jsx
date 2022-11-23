@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch} from "react-redux"
 import { loginActionCreator } from '../actionFolder/action';
@@ -9,35 +9,15 @@ function Login() {
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const dispatch = useDispatch();
-//   const adminUser = {
-//     email: 'admin@admin.com',
-//     password: 'abc',
-//   };
+
 /*
-
-  const [user, setUser] = useState({ name: '', email: '' });
-
-  
-
-  const Login = (details) => {
-    if (
-      details.email == adminUser.email &&
-      details.password == adminUser.password
-    ) {
-      setUser({
-        name: details.name,
-        email: details.email,
-      });
-    } else {
-      setError('details dont matcadm');
-    }
-  };
-
   const LogOut = () => {
     setUser({ name: '', email: '' });
   };*/
+
 //turn pet profile in link
 const [details, setDetails] = useState({ name: '', password: '' });
+
 const submitHandler = (e) => {
     e.preventDefault();
         fetch('api/login', {
@@ -75,6 +55,22 @@ const submitHandler = (e) => {
        console.log(err)}
        )
     }
+
+    useEffect(() => {
+      fetch('/api/auth/')
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else throw new Error('User is not logged in')
+      })
+      .then((data) => {
+        dispatch(actions.loginActionCreator(data.username, data.userId));
+        navigate('/pets/' + data.userId);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }, [])
 
   return(
     <div className='centered'>
