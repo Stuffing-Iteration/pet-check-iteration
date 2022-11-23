@@ -59,8 +59,9 @@ userController.createJWT = (req, res, next) => {
   // expect incoming res.locals to have username and userId
   const jbody = {
     issuedBy: 'pet-check',
-    username: res.locals.username,
-    userId: res.locals.userId
+    username: res.locals.user.username,
+    userId: res.locals.user.id,
+    email: res.locals.user.email
   }
   // Create JWT with 5min lifespan and send it back in a cookie for storage
   const thisJWT =  jwt.sign(jbody, process.env.TOKEN_SECRET, { expiresIn: '900s' } );
@@ -83,6 +84,7 @@ userController.verifyJWT = (req, res, next) => {
       res.locals.verified = true;
       res.locals.username = data.username;
       res.locals.userId = data.userId;
+      res.locals.email = data.email;
     };
     next();
     return;

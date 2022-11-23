@@ -77,10 +77,11 @@ const submitHandler = (e) => {
     }
 
     useEffect(() => {
-      fetch('/api/login/')
-      .then((response) => response.json())
+      fetch('/api/auth/')
+      .then((response) => { if (response.status === 200) return response.json() })
       .then((data) => {
-        navigate(data.redirectURL);
+        dispatch(actions.loginActionCreator(data.username, data.userId));
+        navigate('/pets/' + data.userId);
       })
       .catch((error) => {
         console.error(error);

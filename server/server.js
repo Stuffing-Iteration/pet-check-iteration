@@ -28,12 +28,12 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 //////////////////////////////////////////////////////////////////////////////////////
 // --------------------------- Auto Login Endpoint ------------------------------- //
 //////////////////////////////////////////////////////////////////////////////////////
-app.get('/api/login', userController.verifyJWT, (req, res) => {
+app.get('/api/auth', userController.verifyJWT, (req, res) => {
   if (res.locals.verified) {
     // If verified, return the app to the page without modifying their URL
-    res.status(200).json({redirectURL: '/pets/' + res.locals.userId});
+    res.status(200).json(res.locals);
   } else {
-    res.status(500).json({redirectURL: '/'});
+    res.sendStatus(500);
   }
 })
 
