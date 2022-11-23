@@ -58,6 +58,27 @@ export default function ViewVaccine(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleRowClick = (e) => {
+    console.log('row has been clicked')
+    console.log(e);
+    clickedRows[e.id] ? delete clickedRows[e.id] : clickedRows[e.id] = true; 
+    console.log('clickedRows', clickedRows)
+  };
+
+  const handleDelete = (e) => {
+    const ids = Object.keys(clickedRows);
+    ids.forEach(id => {
+      fetch(`/api/vax/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        console.log(response)
+        fetchData();
+      })
+    })
+  };
+
   return (
     <div>
       <Button className='addNote' variant='outlined' onClick={handleClickOpen}>
@@ -82,7 +103,7 @@ export default function ViewVaccine(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          {/* <Button onClick={handleClick}>Submit</Button> */}
+          <Button onClick={handleDelete}>Delete Selected</Button>
         </DialogActions>
       </Dialog>
     </div>

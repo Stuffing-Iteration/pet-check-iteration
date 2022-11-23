@@ -78,7 +78,7 @@ export default function ViewAppointments({ appts, petId }) {
     console.log(e);
     clickedRows[e.id] ? delete clickedRows[e.id] : clickedRows[e.id] = true; 
     console.log('clickedRows', clickedRows)
-  } 
+  };
 
   const handleDelete = (e) => {
     const ids = Object.keys(clickedRows);
@@ -91,8 +91,7 @@ export default function ViewAppointments({ appts, petId }) {
         fetchData();
       })
     })
-
-  }
+  };
 
   return (
     <div>

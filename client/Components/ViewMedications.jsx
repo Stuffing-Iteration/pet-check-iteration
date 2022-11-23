@@ -61,9 +61,25 @@ export default function ViewMedications({meds, petId}) {
     setOpen(false);
   };
 
-  const handleDelete = () => {
-    return;
-  }
+  const handleRowClick = (e) => {
+    console.log('row has been clicked')
+    console.log(e);
+    clickedRows[e.id] ? delete clickedRows[e.id] : clickedRows[e.id] = true; 
+    console.log('clickedRows', clickedRows)
+  };
+
+  const handleDelete = (e) => {
+    const ids = Object.keys(clickedRows);
+    ids.forEach(id => {
+      fetch(`/api/meds/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        console.log(response)
+        fetchData();
+      })
+    })
+  };
 
   return (
     <div>
@@ -84,13 +100,13 @@ export default function ViewMedications({meds, petId}) {
               pageSize={5}
               rowsPerPageOptions={[5]}
               checkboxSelection
+              onRowClick={handleRowClick}
             />
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleDelete}>Delete Selected</Button>
-          {/* <Button onClick={handleClick}>Submit</Button> */}
         </DialogActions>
       </Dialog>
     </div>
