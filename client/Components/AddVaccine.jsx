@@ -10,7 +10,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 // import { useForm } from 'react-hook-form';
 
-const AddVaccine = () => {
+const AddVaccine = ({petId}) => {
   // "vaccine": "rabies",
   // "date": "10/12/22",
   // "expiration": "10/12/25",
@@ -22,17 +22,21 @@ const AddVaccine = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClick = async () => {
-    await fetch('/api/vax', {
+  const handleClick = () => {
+    console.log('vax info ', vaccine, date, exp, location)
+    fetch('/api/vax', {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         vaccine: vaccine,
         date: date,
-        expiration: expiration,
+        expiration: exp,
         location: location,
-        pet_id: 1,
-        vet_id: 1,
-      },
+        pet_id: petId,
+        vet_id: 2,
+      }),
     });
 
     /*
@@ -79,7 +83,10 @@ const AddVaccine = () => {
               <OutlinedInput
                 autoComplete='off'
                 id='vaccineName'
-                onChange={(e) => setVaccine(e.target.value)}
+                onChange={(e) => {
+                  setVaccine(e.target.value);
+                  console.log('updated vax: ', vaccine)
+                }}
                 label='Vaccine Name'
               />
             </FormControl>

@@ -169,6 +169,20 @@ petController.getUserPets = (req, res, next) => {
     );
 };
 
+// ----- Get an individual pet ------ //
+petController.getOnePet = (req, res, next) => {
+  const { petid } = req.params;
+  const qText = 'SELECT * FROM pets WHERE id =$1';
+  const params = [petid];
+
+  db.query(qText, params)
+    .then((pet) => {
+      res.locals.retrievedPet = pet.rows[0];
+      return next();
+    })
+    .catch((err) => next(err))
+}
+
 // --- Get all of a pet's medications ---- //
 petController.getPetMedications = (req, res, next) => {
   console.log('GET pet meds req body: ', req.body);

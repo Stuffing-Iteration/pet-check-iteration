@@ -28,13 +28,16 @@ const AddAppointment = () => {
   const handleClick = () => {
     fetch('/api/appts', {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         date: date,
         time: time,
         location: location,
         vet: vet,
         reason: reason,
-      },
+      }),
     }).then((response) => console.log(response));
     // useEffect(() => {
     //   axios

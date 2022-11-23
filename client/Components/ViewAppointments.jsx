@@ -38,6 +38,13 @@ const columns = [
 export default function ViewAppointments({ appts }) {
   const { date, time, location, vet, reason } = appts;
 
+  // let rows;
+  // if (appts) {
+  //   rows = appts.map(appointment => {
+  //     const {  }
+  //   })
+  // }
+
   const rows = [
     {
       id: 1,

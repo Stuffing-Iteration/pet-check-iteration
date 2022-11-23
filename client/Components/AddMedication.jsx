@@ -28,12 +28,15 @@ const AddMedication = () => {
   const handleClick = async () => {
     fetch('/api/meds', {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         medication: medication,
         dosage: dosage,
         instructions: instructions,
         reason: reason,
-      },
+      }),
     });
   };
 

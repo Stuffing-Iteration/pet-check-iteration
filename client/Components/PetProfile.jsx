@@ -61,20 +61,20 @@ const PetProfile = () => {
 
   //Will work with Azzie
   const getPets = () => {
-    fetch(`/api/pets/${petId}`)
+    fetch(`/api/onepet/${petId}`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         console.log('data from fetch', data);
         setPetInfo({
-          name: data[0].name,
-          owner_id: data[0].owner_id,
-          species: data[0].species,
-          breed: data[0].breed,
-          weight: data[0].weight,
-          color: data[0].color,
-          age: data[0].age,
+          name: data.name,
+          owner_id: data.owner_id,
+          species: data.species,
+          breed: data.breed,
+          weight: data.weight,
+          color: data.color,
+          age: data.age,
         });
         console.log(petInfo);
       })
@@ -167,10 +167,10 @@ const PetProfile = () => {
       </div>
 
       <div className='profile-container'>
-        <PetInfo info={petInfo} />
-        <VaccineRecord vaccineInfo={vaccines} />
-        <Appointments appt={appts} />
-        <Medication med={medications} />
+        <PetInfo info={petInfo} petId={petId}/>
+        <VaccineRecord vaccineInfo={vaccines} petId={petId}/>
+        <Appointments appt={appts} petId={petId}/>
+        <Medication med={medications} petId={petId}/>
         <Weight />
       </div>
     </>

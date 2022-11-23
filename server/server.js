@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.static(path.resolve(__dirname, '/client')));
 app.use((req, res, next) => {
   console.log(`${req.method} request to ${req.url}`);
+  console.log('request body: ', req.body)
   next();
   return;
 })
@@ -105,7 +106,13 @@ app.put('/vets/:vetid', petController.updateVet, (req, res) => {
 // ---- Get all of a users pets --- //
 app.get('/api/pets/:userid', petController.getUserPets, (req, res) => {
   res.status(200).json(res.locals.retrievedPets);
-})
+});
+
+
+app.get('/api/onepet/:petid', petController.getOnePet, (req, res) => {
+  res.status(200).json(res.locals.retrievedPet);
+});
+
 
 // ----- Get all of a users veterinarians -----//
 app.get('/api/vets/:userid', petController.getUserVets, (req, res) => {

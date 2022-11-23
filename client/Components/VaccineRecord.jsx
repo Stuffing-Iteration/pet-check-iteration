@@ -2,7 +2,7 @@ import React from 'react';
 import AddVaccine from './AddVaccine';
 import ViewVaccine from './ViewVaccine';
 
-const VaccineRecord = ({ vaccineInfo }) => {
+const VaccineRecord = ({ vaccineInfo, petId }) => {
   console.log('vax info from vacine record componenent', vaccineInfo);
   return (
     <>
@@ -10,7 +10,7 @@ const VaccineRecord = ({ vaccineInfo }) => {
         <div className='vaccine-info-header'>Vaccine Record</div>
         <div className='vaccine-info-box'>
           <ViewVaccine vaccineInfo={vaccineInfo} />
-          <AddVaccine />
+          <AddVaccine petId={petId}/>
         </div>
       </div>
     </>

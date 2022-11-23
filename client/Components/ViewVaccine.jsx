@@ -33,16 +33,31 @@ const columns = [
 // ];
 
 export default function ViewVaccine(props) {
-  const { vaccine, date, expiration, location, vet_id } = props.vaccineInfo;
+
+  // const { vaccine, date, expiration, location, vet_id } = props.vaccineInfo;
   console.log('vaccine info from viewVaccine', props.vaccineInfo);
-  const rows = [
-    {
-      id: 1,
-      vaccine: vaccine,
-      date: date,
-      expiration: expiration,
-      vet: vet_id,
-    },
+  let rows;
+  if (props.vaccineInfo) {
+    rows = props.vaccineInfo.map(vax => {
+      const { id, vaccine, date, expiration, location, pet_id, vet_id } = vax;
+      return {
+        id: id,
+        vaccine: vaccine,
+        date: date,
+        expiration: expiration,
+        vet: vet_id
+      }
+    })
+  }
+  // const rows = [
+  //   {
+  //     id: 1,
+  //     vaccine: vaccine,
+  //     date: date,
+  //     expiration: expiration,
+  //     vet: vet_id,
+  //   },
+  // ]
     // { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
     // { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
     // {
@@ -53,7 +68,7 @@ export default function ViewVaccine(props) {
     //   vet: '',
     // },
     // { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
-  ];
+  // ];
 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
