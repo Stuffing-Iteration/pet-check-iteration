@@ -29,6 +29,10 @@
   margin-left: 1vw;
   margin-right: 1vw;
 }
+.form-group{
+ margin-left: 1vw;
+ margin-right: 1vw
+}
 .petCardImg {
     position: absolute;
     top: 2;
@@ -47,6 +51,11 @@
     flex-direction: row;
 }
 .pet-form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.formContainer{
     display: flex;
     flex-direction: row;
 }
