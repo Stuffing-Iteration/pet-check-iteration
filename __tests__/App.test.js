@@ -1,24 +1,15 @@
 import {rest} from 'msw';
 import {setupServer} from 'msw/node';
-import {render, screen, getByLabelText} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
+import 'regenerator-runtime/runtime';
 
 import React from 'react';
 import {  MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from '../client/App';
 import store from '../client/ReducersAndStore/store';
-
-
-// const server = setupServer(
-//     rest.get('/greeting', (req, res, ctx) => {
-//       return res(ctx.json({greeting: 'hello there'}))
-//     }),
-//   )
-
-// beforeAll(() => server.listen())
-// afterEach(() => server.resetHandlers())
-// afterAll(() => server.close())
+// import fetch from 'node-fetch';
 
 describe('Application Page Displays', function() {
 
@@ -61,7 +52,7 @@ describe('Application Page Displays', function() {
     });
 
     // Invalid Page
-    test('Invlaid Page Rendering', async function() {
+    test('Invalid Page Rendering', async function() {
       render(
         <MemoryRouter initialEntries={['/broken/link']}>
           <Provider store={store}>
@@ -72,4 +63,41 @@ describe('Application Page Displays', function() {
     
       expect(screen.getByRole('heading')).toHaveTextContent(/page\ not\ found/i)
     });
+
+
+    describe('Show user page on authentication', function() {
+      const server = setupServer(
+          rest.get('/api/auth', (req, res, ctx) => {
+            const data = {
+              username: 'taylor',
+              userId: 10,
+            };
+            console.log(data)
+            return res(ctx.status(200)
+            )
+          })
+        )
+
+      beforeAll(() => server.listen())
+      afterEach(() => server.resetHandlers())
+      afterAll(() => server.close())
+
+      test('User Page Rendering', async function() {
+        render(
+          <MemoryRouter initialEntries={['/']}>
+            <Provider store={store}>
+              <App />
+            </Provider>
+          </MemoryRouter>
+        )
+      
+        // expect(screen.getByRole('heading')).toHaveTextContent(/page\ not\ found/i)
+      });
+
+    })
+
+
+
 })
+
+
