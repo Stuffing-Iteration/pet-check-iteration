@@ -26,10 +26,23 @@ function UserProfile(props) {
         .catch((err) => console.log(err))
     }
     useEffect(() => {
+<<<<<<< HEAD
        
+=======
+        const fetchPets = async () =>{
+            fetch(`api/pets/${props.userId}`)
+            .then((data) => {
+                return data.json();
+            })
+            .then((data) => {
+                setPets(data)
+                return data
+            })
+            .catch((err) => console.log(err));
+        }
+>>>>>>> dev
         fetchPets();
-        //setPets()
-    }, [])
+    }, []);
 
     const submitHandler = (e) => {
         e.preventDefault();

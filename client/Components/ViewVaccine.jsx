@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -18,60 +19,39 @@ const columns = [
   },
 ];
 
-// const rows = [
-//   { id: 1, vaccine: 'Bordetella', date: '', expiration: '', vet: '' },
-//   // { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
-//   // { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
-//   // {
-//   //   id: 4,
-//   //   vaccine: 'Leptospirosis',
-//   //   date: '',
-//   //   expiration: '',
-//   //   vet: '',
-//   // },
-//   // { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
-// ];
-
 export default function ViewVaccine(props) {
 
-  // const { vaccine, date, expiration, location, vet_id } = props.vaccineInfo;
   console.log('vaccine info from viewVaccine', props.vaccineInfo);
-  let rows;
-  if (props.vaccineInfo) {
-    rows = props.vaccineInfo.map(vax => {
-      const { id, vaccine, date, expiration, location, pet_id, vet_id } = vax;
-      return {
-        id: id,
-        vaccine: vaccine,
-        date: date,
-        expiration: expiration,
-        vet: vet_id
-      }
-    })
-  }
-  // const rows = [
-  //   {
-  //     id: 1,
-  //     vaccine: vaccine,
-  //     date: date,
-  //     expiration: expiration,
-  //     vet: vet_id,
-  //   },
-  // ]
-    // { id: 2, vaccine: 'DA2PP', date: '', expiration: '', vet: '' },
-    // { id: 3, vaccine: 'Influenza', date: '', expiration: '', vet: '' },
-    // {
-    //   id: 4,
-    //   vaccine: 'Leptospirosis',
-    //   date: '',
-    //   expiration: '',
-    //   vet: '',
-    // },
-    // { id: 5, vaccine: 'Rabies', date: '', expiration: '', vet: '' },
-  // ];
+  // let rows;
+  const [rows, setRows] = React.useState([]);
 
+  const createRows = (data) => {
+    if(data) {
+      const newRows = data.map(vax => {
+        const { id, vaccine, date, expiration, location, pet_id, vet_id } = vax;
+        return {
+          id: id,
+          vaccine: vaccine,
+          date: date,
+          expiration: expiration,
+          vet: vet_id
+        }
+      })
+      setRows(newRows)
+    }
+  };
+
+  const fetchData = () => {
+    fetch(`/api/vax/${props.petId}`)
+      .then(response => response.json())
+      .then(data => {
+        createRows(data);
+      })
+  };
+  
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
+    fetchData();
     setOpen(true);
   };
 

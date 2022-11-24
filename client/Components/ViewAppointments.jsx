@@ -5,6 +5,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { GridEventListener } from '@mui/x-data-grid';
+import { MuiEvent } from '@mui/x-data-grid';
+// import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -19,49 +22,78 @@ const columns = [
   { field: 'Reason', headerName: 'Reason', width: 130 },
 ];
 
-// const rows = [
-//   { id: 1, date: '', time: '', location: '', vet: '', reason: '' },
-//   { id: 2, date: '', time: '', location: '', vet: '', reason: '' },
-//   { id: 3, date: '', time: '', location: '', vet: '', reason: '' },
-//   {
-//     id: 4,
-//     date: '',
-//     time: '',
-//     location: '',
-//     vet: '',
-//     reason: '',
-//   },
-//   { id: 5, date: '', time: '', location: '', vet: '', reason: '' },
-//   { id: 6, date: '', time: '', location: '', vet: '', reason: '' },
-// ];
-
 export default function ViewAppointments({ appts, petId }) {
 
-  let rows;
-  if (appts) {
-    rows = appts.map(appointment => {
-      const { id, date, time, reason, location } = appointment;
+  const [rows, setRows] = React.useState([]);
 
-      return {
-        id: id, 
-        date: date,
-        time: time,
-        reason: reason,
-        location: location,
-        pet_id: petId,
-        vet_id: 2
+  const createRows = (data) => {
+    if(data) {
+      const newRows = data.map(appt => {
+        const { id, date, time, reason, location } = appt;
+        return {
+          id: id, 
+          date: date,
+          time: time,
+          reason: reason,
+          location: location,
+          pet_id: petId,
+          vet_id: 2
+        }
+      })
+      setRows(newRows)
       }
-    })
+    };
+  
+  const fetchData = () => {
+    fetch(`/api/appts/${petId}`)
+      .then(response => response.json())
+      .then(data => {
+        createRows(data);
+      })
   };
 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
+    fetchData()
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  // const handleCheckBoxClick: GridEventListener<'rowSelectionCheckboxChange'> = (
+  //   params,  // GridRowSelectionCheckboxParams
+  //   event,   // MuiEvent<React.ChangeEvent<HTMLElement>>
+  //   details, // GridCallbackDetails
+  // ) => {
+  //   return;
+  // };
+
+  const [clicked, setClicked] = React.useState([]);
+  const clickedRows = {};
+
+  const handleRowClick = (e) => {
+    console.log('row has been clicked')
+    console.log(e);
+    clickedRows[e.id] ? delete clickedRows[e.id] : clickedRows[e.id] = true; 
+    console.log('clickedRows', clickedRows)
+  } 
+
+  const handleDelete = (e) => {
+    const ids = Object.keys(clickedRows);
+    ids.forEach(id => {
+      fetch(`/api/appts/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        console.log(response)
+        fetchData();
+      })
+    })
+
+  }
+
   return (
     <div>
       <Button className='addNote' variant='outlined' onClick={handleClickOpen}>
@@ -71,7 +103,7 @@ export default function ViewAppointments({ appts, petId }) {
         <DialogTitle>View Appointments</DialogTitle>
         <DialogContent>
           <div
-            style={{ height: 400, width: '500px' }}
+            style={{ height: 400, width: '600px' }}
             open={open}
             onClose={handleClose}
           >
@@ -81,12 +113,14 @@ export default function ViewAppointments({ appts, petId }) {
               pageSize={5}
               rowsPerPageOptions={[5]}
               checkboxSelection
+              onRowClick={handleRowClick}
+              // onRowSelectionCheckboxChange={handleRowClick}
             />
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          {/* <Button onClick={handleClick}>Submit</Button> */}
+          <Button onClick={handleDelete}>Delete Selected</Button>
         </DialogActions>
       </Dialog>
     </div>

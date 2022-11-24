@@ -75,10 +75,10 @@ const submitHandler = (e) => {
 
   return(
     <div className='centered'>
-<form className='login-form' onSubmit={submitHandler}>
-      <div className='form-inner'>
-        <h2>Login</h2>
-        {error != ' ' ? <div className='error'></div> : ''}
+      <form className='login-form' onSubmit={submitHandler}>
+        <div className='form-inner'>
+          <h2>Login</h2>
+          {error != ' ' ? <div className='error'></div> : ''}
         <div className='form-group'>
           <label htmlFor='name'>Name:</label>
           <input
