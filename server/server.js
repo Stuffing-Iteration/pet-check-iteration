@@ -31,7 +31,7 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 // --------------------------- Auto Login Endpoint ------------------------------- //
 //////////////////////////////////////////////////////////////////////////////////////
 app.get('/api/auth', userController.verifyJWT, (req, res) => {
-  if (res.locals.verified) {
+  if (res.locals.verified) { 
     // If verified, return the app to the page without modifying their URL
     res.status(200).json(res.locals);
   } else {
@@ -118,6 +118,15 @@ app.post('/api/weights', petController.addWeights, (req, res) => {
 
 app.put('/pets/:petid', petController.updatePet, (req, res) => {
   res.status(200).send('Pet successfully updated')
+})
+
+//Documents is the table name
+app.get('/api/pets/documentretrieve/:userid/:petid', petController.getDocuments, (req, res) => {
+  res.status(200).json(res.locals.retrievedDocumentInfo)
+})
+//http://localhost:8080/api/pets/documentset?userid=10&petid=3
+app.post('/api/pets/documentset/:userid/:petid', petController.addImage, (req, res) => {
+  res.status(200).send('Documents successfully sent back')
 })
 
 app.put('/meds/:medid', petController.updateMedication, (req, res) => {

@@ -38,6 +38,7 @@ const submitHandler = (e) => {
             }})
         .then((data) => {
         if(data.found){
+          console.log(data.data.username + ' ' + data.data.id + ' ' + data)
             dispatch(actions.loginActionCreator(data.user.username, data.user.id))
             // dispatch({type: 'SET_CURRENT_INDEX', payload: [props.column, props.index]})
         }

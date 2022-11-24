@@ -11,6 +11,8 @@ import Weight from './Weight';
 import NavBar from './NavBar';
 import VetList from './VetList';
 
+import DocumentView from './DocumentView'
+
 // @FIXME will remove (Mock-Data)
 
 // ---- Pet Information ----- //
@@ -102,7 +104,7 @@ const PetProfile = () => {
       })
       .catch((err) => console.log(err));
   };
-  
+
   const getMed = () => {
     fetch(`/api/meds/${petId}`)
       .then((response) => {
@@ -114,11 +116,12 @@ const PetProfile = () => {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
+  useEffect( () => {
     getPets();
     getVaccine();
     getAppt();
     getMed();
+    
   }, []);
 
   return (
@@ -142,6 +145,7 @@ const PetProfile = () => {
         <Appointments appts={appts} petId={petId}/>
         <Medication meds={medications} petId={petId}/>
         <Weight />
+        <DocumentView petId={petId} />
       </div>
     </>
   );
