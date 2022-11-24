@@ -143,6 +143,26 @@ petController.addWeights = (req, res, next) => {
       });
     });
 }
+// ------------------------ Add a new image link ------------------------ //
+petController.addImage = (req, res, next) => {
+  console.log('add weight req body: ', req.body);
+  const { sent } = req.body;
+  const { userid, petid } = req.params;
+  const qText =
+    'INSERT INTO documents (link, user_id, pet_id) VALUES ($1, $2, $3);';
+  const params = [sent, userid, petid];
+  db.query(qText, params)
+    .then((result) => {
+      console.log('returned from db query: ', result);
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        errorMsg: 'Problem in addImage middleware',
+        err: err,
+      });
+    });
+}
 
 // ----------------------------------------------------------------- //
 
@@ -259,6 +279,22 @@ petController.getUserVets = (req, res, next) => {
     );
 };
 
+// ------ Get all of a pet's veterinarians ------ //
+petController.getDocuments = (req, res, next) => {
+  const { userid, petid } = req.params;
+  console.log('document params', req.params);
+  const qText = 'SELECT * FROM documents WHERE user_id = $1 and pet_id = $2'; // get all the vets with a user_id that matches
+  const params = [userid, petid];
+  db.query(qText, params)
+    .then((documentData) => {
+      console.log('retrieved documents: ', documentData.rows);
+      res.locals.retrievedDocumentInfo = documentData.rows; // add the vets to res.locals to send back to frontend
+      return next();
+    })
+    .catch((err) =>
+      next({ errorMsg: 'Error in getDocuments middleware', err: err })
+    );
+};
 /////////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Updating Pet Info Routes ------------------------------ //
 /////////////////////////////////////////////////////////////////////////////////////////
