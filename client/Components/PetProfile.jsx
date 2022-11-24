@@ -9,7 +9,7 @@ import Medication from './Medication';
 import axios from 'axios';
 import Weight from './Weight';
 import NavBar from './NavBar';
-
+import DocumentView from './DocumentView'
 // @FIXME will remove (Mock-Data)
 
 // ---- Pet Information ----- //
@@ -76,7 +76,7 @@ const PetProfile = () => {
           color: data.color,
           age: data.age,
         });
-        console.log(petInfo);
+        
       })
       .catch((err) => console.log(err));
   };
@@ -119,11 +119,12 @@ const PetProfile = () => {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
+  useEffect( () => {
     getPets();
     getVaccine();
     getAppt();
     getMed();
+    
   }, []);
 
   return (
@@ -146,6 +147,7 @@ const PetProfile = () => {
         <Appointments appts={appts} petId={petId}/>
         <Medication meds={medications} petId={petId}/>
         <Weight />
+        <DocumentView petId={petId} />
       </div>
     </>
   );
