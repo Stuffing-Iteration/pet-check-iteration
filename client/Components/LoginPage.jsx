@@ -57,7 +57,7 @@ const submitHandler = (e) => {
     }
 
     useEffect(() => {
-      fetch('/api/auth/')
+      fetch('http://localhost:3000/api/auth/')
       .then((response) => {
         if (response.status === 200) {
           return response.json();

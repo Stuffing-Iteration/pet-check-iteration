@@ -9,13 +9,12 @@ import {  MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from '../client/App';
 import store from '../client/ReducersAndStore/store';
-// import fetch from 'node-fetch';
 
 describe('Application Page Displays', function() {
 
   // Login Page
   test('Login Page Rendering', async function() {
-    render(
+    await render(
       <MemoryRouter initialEntries={['/']}>
         <Provider store={store}>
           <App />
@@ -35,7 +34,7 @@ describe('Application Page Displays', function() {
 
     // Signup Page
     test('Signup Page Rendering', async function() {
-      render(
+      await render(
         <MemoryRouter initialEntries={['/signup']}>
           <Provider store={store}>
             <App />
@@ -53,7 +52,7 @@ describe('Application Page Displays', function() {
 
     // Invalid Page
     test('Invalid Page Rendering', async function() {
-      render(
+      await render(
         <MemoryRouter initialEntries={['/broken/link']}>
           <Provider store={store}>
             <App />
@@ -67,14 +66,12 @@ describe('Application Page Displays', function() {
 
     describe('Show user page on authentication', function() {
       const server = setupServer(
-          rest.get('/api/auth', (req, res, ctx) => {
+          rest.get('http://localhost:3000/api/auth/', (req, res, ctx) => {
             const data = {
               username: 'taylor',
               userId: 10,
             };
-            console.log(data)
-            return res(ctx.status(200)
-            )
+            return res(ctx.status(200), ctx.json(data))
           })
         )
 
@@ -83,15 +80,15 @@ describe('Application Page Displays', function() {
       afterAll(() => server.close())
 
       test('User Page Rendering', async function() {
-        render(
-          <MemoryRouter initialEntries={['/']}>
+        await render(
+          <MemoryRouter initialEntries={['/pets/10']}>
             <Provider store={store}>
               <App />
             </Provider>
           </MemoryRouter>
         )
       
-        // expect(screen.getByRole('heading')).toHaveTextContent(/page\ not\ found/i)
+        expect(screen.getByRole('heading')).toHaveTextContent(/page\ not\ found/i)
       });
 
     })
