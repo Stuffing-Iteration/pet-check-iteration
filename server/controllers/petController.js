@@ -39,10 +39,10 @@ petController.addPet = (req, res, next) => {
 // ------------------------ Add a new Vet ------------------------ //
 petController.addVet = (req, res, next) => {
   console.log('add vet req body: ', req.body);
-  const { vet, location, phone, clinic, user_id } = req.body;
+  const { vet, location, phone, clinic, user_id, pet_id } = req.body;
   const qText =
-    'INSERT INTO vets (vet, location, phone, clinic, user_id) VALUES ($1, $2, $3, $4, $5);';
-  const params = [vet, location, phone, clsinic, user_id];
+    'INSERT INTO vets (vet, location, phone, clinic, user_id, pet_id) VALUES ($1, $2, $3, $4, $5, $6);';
+  const params = [vet, location, phone, clinic, user_id, pet_id];
   db.query(qText, params)
     .then((result) => {
       console.log('returned from db query: ', result);
@@ -242,12 +242,12 @@ petController.getPetVaccinations = (req, res, next) => {
     );
 };
 
-// ------ Get all of a user's veterinarians ------ //
+// ------ Get all of a pet's veterinarians ------ //
 petController.getUserVets = (req, res, next) => {
-  const { userid } = req.params;
+  const { petid } = req.params;
   console.log('vet params', req.params);
-  const qText = 'SELECT * FROM vets WHERE user_id = $1'; // get all the vets with a user_id that matches
-  const params = [userid];
+  const qText = 'SELECT * FROM vets WHERE pet_id = $1'; // get all the vets with a user_id that matches
+  const params = [petid];
   db.query(qText, params)
     .then((vets) => {
       console.log('retrieved vets: ', vets.rows);
@@ -368,7 +368,7 @@ petController.deleteAppointment = (req, res, next) => {
 // ------ Deleting a vaccination ------ //
 petController.deleteVax = (req, res, next) => {
   console.log('inside petController.deleteVax');
-  const { vaxid } = req.body;
+  const { vaxid } = req.params;
   const params = [vaxid];
   const deleteQ = 'DELETE FROM vaccinations WHERE id = $1';
   db.query(deleteQ, params)
@@ -386,8 +386,8 @@ petController.deleteVax = (req, res, next) => {
 // ------ Deleting a medication ------ //
 petController.deleteMedication = (req, res, next) => {
   console.log('inside petController.deleteMedication');
-  const { medId } = req.body;
-  const params = [medId];
+  const { medid } = req.params;
+  const params = [medid];
   const deleteQ = 'DELETE FROM medications WHERE id = $1';
   db.query(deleteQ, params)
     .then(() => {
@@ -395,6 +395,20 @@ petController.deleteMedication = (req, res, next) => {
     })
     .catch((err) =>
       next({ errorMsg: 'Error in petController.deleteMedication: ', err: err })
+    );
+};
+
+// ------ Deleting a Vet ------ //
+petController.deleteVet = (req, res, next) => {
+  const { vetId } = req.params;
+  const params = [vetId];
+  const deleteQ = 'DELETE FROM vets WHERE id = $1';
+  db.query(deleteQ, params)
+    .then(() => {
+      return next();
+    })
+    .catch((err) =>
+      next({ errorMsg: 'Error in petController.deleteVet: ', err: err })
     );
 };
 

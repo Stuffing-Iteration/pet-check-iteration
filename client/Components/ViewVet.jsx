@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,52 +8,52 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-// medication, dosage, instructions, pet_id, vet_id, reason
 const columns = [
-  // { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'medication', headerName: 'Medication', width: 130 },
-  { field: 'dosage', headerName: 'Dosage', width: 90 },
-  { field: 'instructions', headerName: 'Instructions', width: 130 },
+  // { field: 'id', headerName: 'ID', width: 30 },
+  { field: 'vet', headerName: 'Vet', width: 90 },
+  { field: 'location', headerName: 'Location', width: 120 },
+  { field: 'phone', headerName: 'Phone', width: 140 },
   {
-    field: 'reason',
-    headerName: 'Reason',
+    field: 'clinic',
+    headerName: 'Clinic',
     width: 90,
   },
 ];
 
-export default function ViewMedications({meds, petId}) {
+export default function ViewVet({petId}) {
 
   const [rows, setRows] = React.useState([]);
+  console.log('petId from view vet', petId);
+  // const currGame = useSelector(state => state.game);
+  const userId = useSelector(user => user.userId);
 
   const createRows = (data) => {
     if(data) {
-      const newRows = data.map(med => {
-        const { id, medication, dosage, instructions, reason, pet_id, vet_id } = med;
-
+      const newRows = data.map(veterinarian => {
+        const { id, vet, location, phone, clinic, user_id } = veterinarian;
         return {
-          id: id, 
-          medication: medication,
-          dosage: dosage,
-          instructions: instructions,
-          reason: reason,
-          pet_id: pet_id,
-          vet_id: vet_id
+          id: id,
+          vet: vet,
+          location: location,
+          phone: phone,
+          clinic: clinic, 
+          user_id: user_id
         }
       })
       setRows(newRows)
-      }
-    };
-  
+    }
+  };
+
   const fetchData = () => {
-    fetch(`/api/meds/${petId}`)
+    fetch(`/api/vets/${petId}`)
       .then(response => response.json())
       .then(data => {
         createRows(data);
       })
   };
-
+  
   const [open, setOpen] = React.useState(false);
-
+  
   const handleClickOpen = () => {
     fetchData();
     setOpen(true);
@@ -62,7 +64,7 @@ export default function ViewMedications({meds, petId}) {
   };
 
   const clickedRows = {};
-  
+
   const handleRowClick = (e) => {
     console.log('row has been clicked')
     console.log(e);
@@ -73,7 +75,7 @@ export default function ViewMedications({meds, petId}) {
   const handleDelete = (e) => {
     const ids = Object.keys(clickedRows);
     ids.forEach(id => {
-      fetch(`/api/meds/${id}`, {
+      fetch(`/api/vets/${id}`, {
         method: 'DELETE'
       })
       .then(response => {
@@ -89,21 +91,25 @@ export default function ViewMedications({meds, petId}) {
         View
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>View Medication</DialogTitle>
+        <DialogTitle>View Vaccine Record</DialogTitle>
         <DialogContent>
-          <div
-            style={{ height: 400, width: '600px' }}
-            open={open}
-            onClose={handleClose}
-          >
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              checkboxSelection
-              onRowClick={handleRowClick}
-            />
+          <div className='recordsContainer'>
+            <div
+              style={{ height: 400, width: '550px' }}
+              // style={{ flexGrow: 1 }}
+              // open={open}
+              onClose={handleClose}
+            >
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                onRowClick={handleRowClick}
+              />
+            </div>
+
           </div>
         </DialogContent>
         <DialogActions>

@@ -9,6 +9,7 @@ import Medication from './Medication';
 import axios from 'axios';
 import Weight from './Weight';
 import NavBar from './NavBar';
+import VetList from './VetList';
 
 // @FIXME will remove (Mock-Data)
 
@@ -58,6 +59,7 @@ const PetProfile = () => {
   const [vaccines, setVaccine] = useState('');
   const [appts, setAppt] = useState('');
   const [medications, setMedication] = useState('');
+  const [vets, setVets] = useState([]);
 
   //Will work with Azzie
   const getPets = () => {
@@ -66,7 +68,6 @@ const PetProfile = () => {
         return response.json();
       })
       .then((data) => {
-        console.log('data from fetch', data);
         setPetInfo({
           name: data.name,
           owner_id: data.owner_id,
@@ -76,7 +77,6 @@ const PetProfile = () => {
           color: data.color,
           age: data.age,
         });
-        console.log(petInfo);
       })
       .catch((err) => console.log(err));
   };
@@ -87,9 +87,7 @@ const PetProfile = () => {
         return response.json();
       })
       .then((data) => {
-        console.log('data from vax fetch', data);
         setVaccine(data);
-        console.log('vaccine info', vaccines);
       })
       .catch((err) => console.log(err));
   };
@@ -100,7 +98,6 @@ const PetProfile = () => {
         return response.json();
       })
       .then((data) => {
-        console.log('data from appts fetch', data);
         setAppt(data);
       })
       .catch((err) => console.log(err));
@@ -112,9 +109,7 @@ const PetProfile = () => {
         return response.json();
       })
       .then((data) => {
-        console.log('data from meds fetch', data);
         setMedication(data);
-        console.log('medication info', medications);
       })
       .catch((err) => console.log(err));
   };
@@ -142,6 +137,7 @@ const PetProfile = () => {
 
       <div className='profile-container'>
         <PetInfo info={petInfo} petId={petId}/>
+        <VetList petId={petId} petName={petInfo.name} />
         <VaccineRecord vaccineInfo={vaccines} petId={petId}/>
         <Appointments appts={appts} petId={petId}/>
         <Medication meds={medications} petId={petId}/>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,6 +8,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
+import { MenuItem } from '@mui/material';
+import Select from '@mui/material/Select';
 // import { useForm } from 'react-hook-form';
 
 const AddVaccine = ({petId}) => {
@@ -16,6 +18,8 @@ const AddVaccine = ({petId}) => {
   const [date, setDate] = useState('');
   const [exp, setExp] = useState('');
   const [location, setLocation] = useState('');
+  const [vets, setVets] = useState([]);
+  const [currVet, setCurrVet] = useState('');
 
   const [open, setOpen] = React.useState(false);
 
@@ -41,6 +45,15 @@ const AddVaccine = ({petId}) => {
     handleClose();
   };
 
+  useEffect(() => {
+    fetch(`api/vets/${petId}`)
+      .then(response => response.json())
+      .then(data => {
+        setVets(data)
+        console.log('useEffect has been called')
+      })
+  }, [JSON.stringify(vets)])
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -48,6 +61,11 @@ const AddVaccine = ({petId}) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChange = (e) => {
+    setCurrVet(e.target.value)
+  }
+
   return (
     <div>
       <Button className='addNote' variant='outlined' onClick={handleClickOpen}>
@@ -95,6 +113,23 @@ const AddVaccine = ({petId}) => {
                 onChange={(e) => setLocation(e.target.value)}
                 label='Location'
               />
+            </FormControl>
+            <FormControl sx={{ m: 1, width: '25ch' }}>
+              <InputLabel>Choose a Vet</InputLabel>
+              <Select 
+                value={currVet}
+                label='Vets'
+                onChange={handleChange}
+                >
+                  { vets.length ? 
+                      vets.map(vet => {
+                      return <MenuItem value={vet.vet}>{vet.vet}</MenuItem>
+                    })
+                  : 'Vets'
+                  }
+                  {/* <MenuItem value={'Stella'}>Stella</MenuItem> */}
+
+              </Select>
             </FormControl>
           </form>
         </DialogContent>

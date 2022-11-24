@@ -30,15 +30,17 @@ html {
 
 body {
   /* height: 100vh; */
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to right,
     #ffce00 50%,
     #ffce00 50%,
     #fe4880
   );
+
+} */
 }
 .login-form {
   display: flex;
@@ -200,4 +202,10 @@ body {
   cursor: pointer;
   transform: scale(1.1);
   border: 5px solid black;
+}
+
+.recordsContainer {
+  height: 500px;
+  width: 800px;
+  display: flex;
 }
