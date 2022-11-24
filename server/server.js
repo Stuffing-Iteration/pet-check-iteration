@@ -111,6 +111,7 @@ app.post('/api/weights', petController.addWeights, (req, res) => {
   res.status(200).send('New weight added!')
 })
 
+
 ///////////////////////////////////////////////////////////////////////////////////////
 // ------------------------- Updating Pet Info Routes ------------------------------ //
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +161,7 @@ app.get('/api/onepet/:petid', petController.getOnePet, (req, res) => {
 
 
 // ----- Get all of a users veterinarians -----//
-app.get('/api/vets/:userid', petController.getUserVets, (req, res) => {
+app.get('/api/vets/:petid', petController.getUserVets, (req, res) => {
   res.status(200).json(res.locals.retrievedVets);
 })
 
@@ -196,11 +197,13 @@ app.delete('/api/vax/:vaxid', petController.deleteVax, (req, res) => {
   res.status(200).send('Vaccination removed!');
 });
 
-
 app.delete('/api/meds/:medid', petController.deleteMedication, (req, res) => {
   res.status(200).send('Medication removed!');
 });
 
+app.delete('/api/vets/:vetId', petController.deleteVet, (req, res) => {
+  res.status(200).send('Vet removed!');
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------- Global Routes/Handlers -------------------------------- //

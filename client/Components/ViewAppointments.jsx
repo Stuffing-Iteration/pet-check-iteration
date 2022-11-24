@@ -10,16 +10,16 @@ import { MuiEvent } from '@mui/x-data-grid';
 // import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'date', headerName: 'Date', width: 70 },
-  { field: 'time', headerName: 'Time', width: 130 },
+  // { field: 'id', headerName: 'ID', width: 30 },
+  { field: 'date', headerName: 'Date', width: 120 },
+  { field: 'time', headerName: 'Time', width: 90 },
   { field: 'location', headerName: 'Location', width: 130 },
+  { field: 'reason', headerName: 'Reason', width: 130 },
   {
     field: 'vet',
     headerName: 'Vet',
     width: 90,
-  },
-  { field: 'Reason', headerName: 'Reason', width: 130 },
+  }
 ];
 
 export default function ViewAppointments({ appts, petId }) {
@@ -32,8 +32,8 @@ export default function ViewAppointments({ appts, petId }) {
         const { id, date, time, reason, location } = appt;
         return {
           id: id, 
-          date: date,
-          time: time,
+          date: date.slice(0, 10),
+          time: time.slice(0, 5),
           reason: reason,
           location: location,
           pet_id: petId,
@@ -53,6 +53,7 @@ export default function ViewAppointments({ appts, petId }) {
   };
 
   const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = () => {
     fetchData()
     setOpen(true);
@@ -70,7 +71,7 @@ export default function ViewAppointments({ appts, petId }) {
   //   return;
   // };
 
-  const [clicked, setClicked] = React.useState([]);
+  
   const clickedRows = {};
 
   const handleRowClick = (e) => {
@@ -78,7 +79,7 @@ export default function ViewAppointments({ appts, petId }) {
     console.log(e);
     clickedRows[e.id] ? delete clickedRows[e.id] : clickedRows[e.id] = true; 
     console.log('clickedRows', clickedRows)
-  } 
+  };
 
   const handleDelete = (e) => {
     const ids = Object.keys(clickedRows);
@@ -91,8 +92,7 @@ export default function ViewAppointments({ appts, petId }) {
         fetchData();
       })
     })
-
-  }
+  };
 
   return (
     <div>

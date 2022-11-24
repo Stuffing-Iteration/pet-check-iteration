@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,6 +7,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { MenuItem } from '@mui/material';
 
 // const appt = {
 //   date: '1/22/23',
@@ -24,6 +26,8 @@ const AddMedication = ({petId}) => {
   const [vet, setVet] = useState('');
   const [reason, setReason] = useState('');
   const [open, setOpen] = React.useState(false);
+  const [currVet, setCurrVet] = useState('');
+  const [vets, setVets] = useState([]);
 
   const handleClick = async () => {
     fetch('/api/meds', {
@@ -45,6 +49,15 @@ const AddMedication = ({petId}) => {
     handleClose();
   };
 
+  useEffect(() => {
+    fetch(`api/vets/${petId}`)
+      .then(response => response.json())
+      .then(data => {
+        setVets(data)
+        console.log('useEffect has been called')
+      })
+  }, [JSON.stringify(vets)])
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -52,6 +65,11 @@ const AddMedication = ({petId}) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChange = (e) => {
+    setCurrVet(e.target.value)
+  };
+
   return (
     <div>
       <Button className='addNote' variant='outlined' onClick={handleClickOpen}>
@@ -98,13 +116,21 @@ const AddMedication = ({petId}) => {
               />
             </FormControl>
             <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='Vet'>Vet</InputLabel>
-              <OutlinedInput
-                autoComplete='off'
-                id='Vet'
-                onChange={(e) => setVet(e.target.value)}
-                label='Vet'
-              />
+              <InputLabel>Choose a Vet</InputLabel>
+              <Select 
+                value={currVet}
+                label='Vets'
+                onChange={handleChange}
+                >
+                  { vets.length ? 
+                      vets.map(vet => {
+                      return <MenuItem value={vet.vet}>{vet.vet}</MenuItem>
+                    })
+                  : 'Vets'
+                  }
+                  {/* <MenuItem value={'Stella'}>Stella</MenuItem> */}
+
+              </Select>
             </FormControl>
           </form>
         </DialogContent>

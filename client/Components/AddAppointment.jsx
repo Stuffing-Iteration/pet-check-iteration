@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,6 +8,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
+import Select from '@mui/material/Select';
+import { MenuItem } from '@mui/material';
 
 const AddAppointment = ({petId}) => {
   const [date, setDate] = useState('');
@@ -16,8 +18,9 @@ const AddAppointment = ({petId}) => {
   const [vet, setVet] = useState('');
   const [reason, setReason] = useState('');
   const [open, setOpen] = React.useState(false);
+  const [currVet, setCurrVet] = useState('');
+  const [vets, setVets] = useState([]);
 
-  console.log('pet id inside of addAppointment', petId);
 
   const handleClick = () => {
     
@@ -40,6 +43,15 @@ const AddAppointment = ({petId}) => {
     handleClose();
   };
 
+  useEffect(() => {
+    fetch(`api/vets/${petId}`)
+      .then(response => response.json())
+      .then(data => {
+        setVets(data)
+        console.log('useEffect has been called')
+      })
+  }, [JSON.stringify(vets)])
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,6 +59,10 @@ const AddAppointment = ({petId}) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChange = (e) => {
+    setCurrVet(e.target.value)
+  }
   
   return (
     <div>
@@ -85,15 +101,6 @@ const AddAppointment = ({petId}) => {
               />
             </FormControl>
             <FormControl sx={{ m: 1, width: '25ch' }}>
-              <InputLabel htmlFor='Vet'>Vet</InputLabel>
-              <OutlinedInput
-                autoComplete='off'
-                id='Vet'
-                onChange={(e) => setVet(e.target.value)}
-                label='Vet'
-              />
-            </FormControl>
-            <FormControl sx={{ m: 1, width: '25ch' }}>
               <InputLabel htmlFor='Reason'>Reason for Appointment</InputLabel>
               <OutlinedInput
                 autoComplete='off'
@@ -101,6 +108,23 @@ const AddAppointment = ({petId}) => {
                 onChange={(e) => setReason(e.target.value)}
                 label='Reason'
               />
+            </FormControl>
+            <FormControl sx={{ m: 1, width: '25ch' }}>
+              <InputLabel>Choose a Vet</InputLabel>
+              <Select 
+                value={currVet}
+                label='Vets'
+                onChange={handleChange}
+                >
+                  { vets.length ? 
+                      vets.map(vet => {
+                      return <MenuItem value={vet.vet}>{vet.vet}</MenuItem>
+                    })
+                  : 'Vets'
+                  }
+                  {/* <MenuItem value={'Stella'}>Stella</MenuItem> */}
+
+              </Select>
             </FormControl>
           </form>
         </DialogContent>
