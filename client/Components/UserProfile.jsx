@@ -26,9 +26,6 @@ function UserProfile(props) {
         .catch((err) => console.log(err))
     }
     useEffect(() => {
-<<<<<<< HEAD
-       
-=======
         const fetchPets = async () =>{
             fetch(`api/pets/${props.userId}`)
             .then((data) => {
@@ -40,7 +37,6 @@ function UserProfile(props) {
             })
             .catch((err) => console.log(err));
         }
->>>>>>> dev
         fetchPets();
     }, []);
 
